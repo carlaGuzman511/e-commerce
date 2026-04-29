@@ -1,0 +1,279 @@
+version: '3.9'
+
+services:
+  tenant-db:
+    image: postgres:15
+    container_name: tenant-db
+    environment:
+      POSTGRES_USER: ${TENANT_DB_USER}
+      POSTGRES_PASSWORD: ${TENANT_DB_PASSWORD}
+      POSTGRES_DB: ${TENANT_DB_NAME}
+    ports:
+      - "5435:5432"
+    volumes:
+      - tenant_data:/var/lib/postgresql/data
+    networks:
+      - dh-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${TENANT_DB_USER} -d ${TENANT_DB_NAME}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  product-db:
+    image: postgres:15
+    container_name: product-db
+    environment:
+      POSTGRES_USER: ${PRODUCT_DB_USER}
+      POSTGRES_PASSWORD: ${PRODUCT_DB_PASSWORD}
+      POSTGRES_DB: ${PRODUCT_DB_NAME}
+    ports:
+      - "5436:5432"
+    volumes:
+      - product_data:/var/lib/postgresql/data
+    networks:
+      - dh-network
+
+  order-db:
+    image: postgres:15
+    container_name: order-db
+    environment:
+      POSTGRES_USER: ${ORDER_DB_USER}
+      POSTGRES_PASSWORD: ${ORDER_DB_PASSWORD}
+      POSTGRES_DB: ${ORDER_DB_NAME}
+    ports:
+      - "5437:5432"
+    volumes:
+      - order_data:/var/lib/postgresql/data
+    networks:
+      - dh-network
+  auth-db:
+    image: postgres:15
+    container_name: auth-db
+    environment:
+      POSTGRES_USER: ${AUTH_DB_USER}
+      POSTGRES_PASSWORD: ${AUTH_DB_PASSWORD}
+      POSTGRES_DB: ${AUTH_DB_NAME}
+    ports:
+      - "5438:5432"
+    volumes:
+      - auth_data:/var/lib/postgresql/data
+    networks:
+      - dh-network
+  
+  media-db:
+    image: postgres:15
+    container_name: media-db
+    environment:
+      POSTGRES_USER: ${MEDIA_DB_USER}
+      POSTGRES_PASSWORD: ${MEDIA_DB_PASSWORD}
+      POSTGRES_DB: ${MEDIA_DB_NAME}
+    ports:
+      - "5439:5432"
+    volumes:
+      - media_data:/var/lib/postgresql/data
+    networks:
+      - dh-network
+  
+  registry-service:
+    build: ./registry-service
+    container_name: registry-service
+    ports:
+      - "8761:8761"
+    networks:
+      - dh-network
+
+  config-service:
+    build: ./config-service
+    container_name: config-service
+    depends_on:
+      - registry-service
+    ports:
+      - "8888:8888"
+    networks:
+      - dh-network
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - GIT_USERNAME={GIT_USERNAME}
+      - GIT_PASSWORD={GIT_PASSWORD}
+
+  gateway-service:
+    build: ./gateway-service
+    container_name: gateway-service
+    depends_on:
+      - registry-service
+      - config-service
+      - tenant-service
+      - product-service
+      - order-service
+      - media-service
+      - auth-service
+    ports:
+      - "8080:8080"
+    networks:
+      - dh-network
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - JWT_SECRET_KEY={JWT_SECRET_KEY}
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://registry-service:8761/eureka/
+      - CONFIG_SERVER_URI=http://config-service:8888
+
+  tenant-service:
+    build: ./tenant-service
+    container_name: tenant-service
+    depends_on:
+      tenant-db:
+        condition: service_healthy
+      config-service:
+        condition: service_started
+      registry-service:
+        condition: service_started
+    ports:
+      - "8082:8082"
+    networks:
+      - dh-network
+    environment:
+      - DB_USER=${TENANT_DB_USER}
+      - DB_PASSWORD={TENANT_DB_PASSWORD}
+      - DB_NAME={TENANT_DB_NAME}
+      - DB_HOST={TENANT_DB_HOST}
+      - DB_PORT={TENANT_DB_PORT}
+      - SPRING_PROFILES_ACTIVE=docker
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://tenant-db:5432/${TENANT_DB_NAME}
+      - SPRING_DATASOURCE_USERNAME=${TENANT_DB_USER}
+      - SPRING_DATASOURCE_PASSWORD=${TENANT_DB_PASSWORD}
+
+  product-service:
+    build: ./product-service
+    container_name: product-service
+    depends_on:
+      - product-db:
+          condition: service_healthy
+      - config-service:
+          condition: service_started
+      - registry-service:
+          condition: service_started
+    ports:
+      - "8087:8087"
+    networks:
+      - dh-network
+    environment:    
+      - BACKING_POSTGRES_USER={PRODUCT_DB_USER}
+      - BACKING_POSTGRES_PASSWORD={PRODUCT_DB_PASSWORD}
+      - DB_NAME={PRODUCT_DB_NAME}
+      - BACKING_POSTGRES_PORT={PRODUCT_DB_PORT}
+      - BACKING_POSTGRES_HOST={PRODUCT_DB_HOST}
+      - SPRING_PROFILES_ACTIVE=docker
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://product-db:5432/${PRODUCT_DB_NAME}
+      - SPRING_DATASOURCE_USERNAME=${PRODUCT_DB_USER}
+      - SPRING_DATASOURCE_PASSWORD=${PRODUCT_DB_PASSWORD}
+
+  order-service:
+    build: ./order-service
+    container_name: order-service
+    depends_on:
+      - order-db:
+          condition: service_healthy
+      - config-service:
+          condition: service_started
+      - registry-service:
+          condition: service_started
+    ports:
+      - "8084:8084"
+    networks:
+      - dh-network
+    environment:
+    - DB_USER={ORDER_DB_USER}
+    - DB_PASSWORD={ORDER_DB_PASSWORD}
+    - DB_NAME={ORDER_DB_NAME}
+    - DB_PORT={ORDER_DB_PORT}
+    - DB_HOST={ORDER_DB_HOST}
+    - SPRING_PROFILES_ACTIVE=docker
+    - SPRING_DATASOURCE_URL=jdbc:postgresql://-db:5432/${ORDER_DB_NAME}
+    - SPRING_DATASOURCE_USERNAME=${ORDER_DB_USER}
+    - SPRING_DATASOURCE_PASSWORD=${ORDER_DB_PASSWORD}
+
+    media-service:
+      build: ./media-service
+      container_name: media-service
+      depends_on:
+        - media-db:
+            condition: service_healthy
+        - config-service:
+            condition: service_started
+        - registry-service:
+            condition: service_started
+      ports:
+        - "8088:8088"
+      networks:
+        - dh-network
+      environment:
+      - CLOUDINARY_CLOUD_NAME={CLOUDINARY_CLOUD_NAME}
+      - CLOUDINARY_API_KEY={CLOUDINARY_API_KEY}
+      - CLOUDINARY_API_SECRET={CLOUDINARY_API_SECRET}
+      - BACKING_POSTGRES_USER={MEDIA_DB_USER}
+      - BACKING_POSTGRES_PASSWORD={MEDIA_DB_PASSWORD}
+      - BACKING_POSTGRES_DB={MEDIA_DB_NAME}
+      - BACKING_POSTGRES_HOST={MEDIA_DB_HOST}
+      - BACKING_POSTGRES_PORT={MEDIA_DB_PORT}
+      - DB_USER={MEDIA_DB_USER}
+      - DB_PASSWORD={MEDIA_DB_PASSWORD}
+      - DB_NAME={MEDIA_DB_NAME}
+      - DB_PORT={MEDIA_DB_PORT}
+      - DB_HOST={MEDIA_DB_HOST}
+      - SPRING_PROFILES_ACTIVE=docker
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://-db:5432/${MEDIA_DB_NAME}
+      - SPRING_DATASOURCE_USERNAME=${MEDIA_DB_USER}
+      - SPRING_DATASOURCE_PASSWORD=${MEDIA_DB_PASSWORD}
+
+    auth-service:
+      build: ./auth-service
+      container_name: auth-service
+      depends_on:
+        - auth-db:
+            condition: service_healthy
+        - config-service:
+            condition: service_started
+        - registry-service:
+            condition: service_started
+      ports:
+        - "8081:8081"
+      networks:
+        - dh-network
+      environment:
+      - DB_USER={AUTH_DB_USER}
+      - DB_PASSWORD={AUTH_DB_PASSWORD}
+      - DB_NAME={AUTH_DB_NAME}
+      - DB_PORT={AUTH_DB_PORT}
+      - DB_HOST={AUTH_DB_HOST}
+      - SPRING_PROFILES_ACTIVE=docker
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://-db:5432/${AUTH_DB_NAME}
+      - SPRING_DATASOURCE_USERNAME=${AUTH_DB_USER}
+      - SPRING_DATASOURCE_PASSWORD=${AUTH_DB_PASSWORD}
+
+  # ======================
+  # FRONTEND
+  # ======================
+  frontend:
+    build: ./frontend
+    container_name: dh-frontend
+    ports:
+      - "4200:80"
+    depends_on:
+      - gateway-service
+    networks:
+      - dh-network
+
+# ======================
+# NETWORK & VOLUMES
+# ======================
+networks:
+  dh-network:
+    driver: bridge
+
+volumes:
+  tenant_data:
+  product_data:
+  order_data:
+  auth_data:
+  media_data:

@@ -1,0 +1,302 @@
+version: '3.9'
+
+services:
+
+# docker run --name registry-service -p 8761:8761 -d midpath2-registry-service
+  registry-service:
+    build: ./registry-service
+    container_name: registry-service
+    ports:
+      - "8761:8761"
+    restart: on-failure
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    networks:
+      - dh-network
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:8761/eureka/apps || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+# docker run --name config-service -p 8888:8888 -d midpath2-config-service
+
+  config-service:
+    build: ./config-service
+    container_name: config-service
+    ports:
+      - "8888:8888"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - GIT_USERNAME=${GIT_USERNAME}
+      - GIT_PASSWORD=${GIT_PASSWORD}
+    depends_on:
+      registry-service:
+        condition: service_healthy
+    networks:
+      - dh-network
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:8888/actuator/health || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+# docker run --name gateway-service -p 8080:8080 -d midpath2-gateway-service
+
+  gateway-service:
+    build: ./gateway-service
+    container_name: gateway-service
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://registry-service:8761/eureka/
+      - CONFIG_SERVER_URI=http://config-service:8888
+      - JWT_SECRET_KEY=${JWT_SECRET_KEY}
+    depends_on:
+      registry-service:
+        condition: service_healthy
+      config-service:
+        condition: service_healthy
+    networks:
+      - dh-network
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:8080/actuator/health || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  tenant-db:
+    image: postgres:15
+    container_name: tenant-db
+    environment:
+      POSTGRES_USER: ${TENANT_DB_USER}
+      POSTGRES_PASSWORD: ${TENANT_DB_PASSWORD}
+      POSTGRES_DB: ${TENANT_DB_NAME}
+    ports:
+      - "5435:5432"
+    volumes:
+      - tenant_data:/var/lib/postgresql/data
+    networks:
+      - dh-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${TENANT_DB_USER} -d ${TENANT_DB_NAME}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  tenant-service:
+    build: ./tenant-service
+    container_name: tenant-service
+    depends_on:
+      tenant-db:
+        condition: service_healthy
+      registry-service:
+        condition: service_healthy
+      config-service:
+        condition: service_healthy
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://tenant-db:5432/${TENANT_DB_NAME}
+      - SPRING_DATASOURCE_USERNAME=${TENANT_DB_USER}
+      - SPRING_DATASOURCE_PASSWORD=${TENANT_DB_PASSWORD}
+    ports:
+      - "8082:8082"
+    networks:
+      - dh-network
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:8082/actuator/health || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  product-db:
+    image: postgres:15
+    container_name: product-db
+    environment:
+      POSTGRES_USER: ${PRODUCT_DB_USER}
+      POSTGRES_PASSWORD: ${PRODUCT_DB_PASSWORD}
+      POSTGRES_DB: ${PRODUCT_DB_NAME}
+    ports:
+      - "5436:5432"
+    volumes:
+      - product_data:/var/lib/postgresql/data
+    networks:
+      - dh-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${PRODUCT_DB_USER} -d ${PRODUCT_DB_NAME}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  product-service:
+    build: ./product-service
+    container_name: product-service
+    depends_on:
+      product-db:
+        condition: service_healthy
+      registry-service:
+        condition: service_healthy
+      config-service:
+        condition: service_healthy
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://product-db:5432/${PRODUCT_DB_NAME}
+      - SPRING_DATASOURCE_USERNAME=${PRODUCT_DB_USER}
+      - SPRING_DATASOURCE_PASSWORD=${PRODUCT_DB_PASSWORD}
+    ports:
+      - "8083:8083"
+    networks:
+      - dh-network
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:8083/actuator/health || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  order-db:
+    image: postgres:15
+    container_name: order-db
+    environment:
+      POSTGRES_USER: ${ORDER_DB_USER}
+      POSTGRES_PASSWORD: ${ORDER_DB_PASSWORD}
+      POSTGRES_DB: ${ORDER_DB_NAME}
+    ports:
+      - "5437:5432"
+    volumes:
+      - order_data:/var/lib/postgresql/data
+    networks:
+      - dh-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${ORDER_DB_USER} -d ${ORDER_DB_NAME}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  order-service:
+    build: ./order-service
+    container_name: order-service
+    depends_on:
+      order-db:
+        condition: service_healthy
+      registry-service:
+        condition: service_healthy
+      config-service:
+        condition: service_healthy
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://order-db:5432/${ORDER_DB_NAME}
+      - SPRING_DATASOURCE_USERNAME=${ORDER_DB_USER}
+      - SPRING_DATASOURCE_PASSWORD=${ORDER_DB_PASSWORD}
+    ports:
+      - "8084:8084"
+    networks:
+      - dh-network
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:8084/actuator/health || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  auth-db:
+    image: postgres:15
+    container_name: auth-db
+    environment:
+      POSTGRES_USER: ${AUTH_DB_USER}
+      POSTGRES_PASSWORD: ${AUTH_DB_PASSWORD}
+      POSTGRES_DB: ${AUTH_DB_NAME}
+    ports:
+      - "5438:5432"
+    volumes:
+      - auth_data:/var/lib/postgresql/data
+    networks:
+      - dh-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${AUTH_DB_USER} -d ${AUTH_DB_NAME}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  auth-service:
+    build: ./auth-service
+    container_name: auth-service
+    depends_on:
+      auth-db:
+        condition: service_healthy
+      registry-service:
+        condition: service_healthy
+      config-service:
+        condition: service_healthy
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://auth-db:5432/${AUTH_DB_NAME}
+      - SPRING_DATASOURCE_USERNAME=${AUTH_DB_USER}
+      - SPRING_DATASOURCE_PASSWORD=${AUTH_DB_PASSWORD}
+      - JWT_SECRET_KEY=${JWT_SECRET_KEY}
+    ports:
+      - "8081:8081"
+    networks:
+      - dh-network
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:8081/actuator/health || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  media-db:
+    image: postgres:15
+    container_name: media-db
+    environment:
+      POSTGRES_USER: ${MEDIA_DB_USER}
+      POSTGRES_PASSWORD: ${MEDIA_DB_PASSWORD}
+      POSTGRES_DB: ${MEDIA_DB_NAME}
+    ports:
+      - "5439:5432"
+    volumes:
+      - media_data:/var/lib/postgresql/data
+    networks:
+      - dh-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${MEDIA_DB_USER} -d ${MEDIA_DB_NAME}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  media-service:
+    build: ./media-service
+    container_name: media-service
+    depends_on:
+      media-db:
+        condition: service_healthy
+      registry-service:
+        condition: service_healthy
+      config-service:
+        condition: service_healthy
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://media-db:5432/${MEDIA_DB_NAME}
+      - SPRING_DATASOURCE_USERNAME=${MEDIA_DB_USER}
+      - SPRING_DATASOURCE_PASSWORD=${MEDIA_DB_PASSWORD}
+      - CLOUDINARY_CLOUD_NAME=${CLOUDINARY_CLOUD_NAME}
+      - CLOUDINARY_API_KEY=${CLOUDINARY_API_KEY}
+      - CLOUDINARY_API_SECRET=${CLOUDINARY_API_SECRET}
+    ports:
+      - "8085:8085"
+    networks:
+      - dh-network
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:8086/actuator/health || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+networks:
+  dh-network:
+    driver: bridge
+
+volumes:
+  tenant_data:
+  product_data:
+  order_data:
+  auth_data:
+  media_data:
