@@ -1,0 +1,13 @@
+<article class="home-container">
+  <section class="home-categories-content">
+    <span>{{categoryTitle}}</span>
+
+    <app-category [categories$]="categories$"></app-category>
+  </section>
+
+  <section>
+    <span>{{productTitle}}</span>
+
+    <app-product [products$]="products$"></app-product>
+  </section>
+</article>

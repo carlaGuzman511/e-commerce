@@ -1,0 +1,173 @@
+<article class="product-modal-container">
+  <section class="modal-card">
+    <section class="modal-header">
+      <div>{{TITLE}}</div>
+
+      <button class="modal-button-close"
+              (click)="closeModal()">
+        <span class="icon-close-bold-filled"></span>
+      </button>
+    </section>
+
+    <section class="modal-form">
+
+      <form class="product-form"
+            [formGroup]="form"
+            (ngSubmit)="onSubmit()">
+        <div class="product-form-card product-field-full">
+          <h3 class="product-field-full">General Information</h3>
+
+          <generic-input-field class="product-field"
+                               label="name"
+                               name="name"
+                               type="text"
+                               formControlName="name"
+                               [required]="true">
+          </generic-input-field>
+
+          <generic-input-field class="product-field"
+                               label='brand'
+                               name='brand'
+                               type="text"
+                               formControlName='brand'
+                               className='store-name-field'
+                               [required]="true">
+          </generic-input-field>
+
+          <generic-select-field class="product-field"
+                                formControlName="categoryId"
+                                label="Category"
+                                [options]="options"
+                                [required]="true"
+                                *ngIf="categoriesOption$ | async as options">
+          </generic-select-field>
+
+          <generic-input-field class="product-field"
+                               type="number"
+                               label="Min Stock"
+                               formControlName="minStock"
+                               [required]="true">
+          </generic-input-field>
+
+          <generic-text-area-field class="product-field-full"
+                                   label="Description"
+                                   formControlName="description"
+                                   [rows]="3"
+                                   [required]="true">
+          </generic-text-area-field>
+
+          <generic-text-area-field class="product-field-full"
+                                   label="Technical Details"
+                                   formControlName="technicalDetails"
+                                   [rows]="2"
+                                   [required]="true">
+          </generic-text-area-field>
+        </div>
+
+
+        <div class="product-field-full" formArrayName="variants">
+
+          <div class="product-form-card"
+               *ngFor="let variant of variants.controls; let i = index" [formGroupName]="i">
+            <h3 class="product-field-full">Product Options</h3>
+            
+            <generic-input-field class="product-field"
+                                 label="Product Code"
+                                 formControlName="productCode"
+                                 [required]="true">
+            </generic-input-field>
+
+            <generic-input-field class="product-field"
+                                 type="number"
+                                 label="Price"
+                                 formControlName="price"
+                                 [required]="true">
+            </generic-input-field>
+
+            <generic-text-area-field class="product-field-full"
+                                     label="Variant Description"
+                                     formControlName="description"
+                                     [required]="true">
+            </generic-text-area-field>
+
+            <div class="variant-images">
+              <div class="image-gallery"
+                   *ngIf="variant.get('images')?.value as imgs">
+                <div *ngFor="let img of imgs" class="image-thumb">
+                  <img [src]="previewImages"/>
+
+                  <button class="remove-btn"
+                          type="button"
+                          (click)="removeImage(i)">
+                    <span class="icon-close-light"> </span>
+                  </button>
+                </div>
+
+              </div>
+
+              <label class="image-upload">
+                <span>+ Add Image</span>
+
+                <input type="file"
+                       accept="image/*"
+                       (change)="onFileSelected($event, i)"/>
+              </label>
+            </div>
+
+            <h4 class="product-field-full">Branch Stocks</h4>
+
+            <button class="modal-button"
+                    type="button"
+                    (click)="addBranchStock(i)"><span class="icon-plus-filled"></span>
+            </button>
+
+            <div class="product-field-full"
+                 formArrayName="branchStocks">
+              <div class="product-form" *ngFor="let stock of getBranchStocks(i).controls; let j = index"
+                   [formGroupName]="j">
+
+                <generic-select-field
+                  class="product-field"
+                  label="Branch"
+                  formControlName="branchId"
+                  [options]="branchOption"
+                  [required]="true">
+                </generic-select-field>
+
+                <div class="product-field field-flex">
+                  <generic-input-field
+                    label="Stock"
+                    type="number"
+                    formControlName="stock"
+                    [required]="true">
+                  </generic-input-field>
+
+                  <button class="modal-button"
+                          type="button"
+                          (click)="removeBranchStock(i, j)"
+                          *ngIf="getBranchStocks(i).length > 1">
+                    <span class="icon-close-bold-filled"></span>
+                  </button>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <generic-button
+          title="Cancel"
+          [buttonType]="BUTTON_TYPE.Secondary"
+          (onClick)="closeModal()">
+        </generic-button>
+
+        <generic-button
+          [title]="'save'"
+          [disabled]="form.invalid"
+          [buttonType]="BUTTON_TYPE.Primary"
+          (ngSubmit)="onSubmit()">
+        </generic-button>
+      </form>
+    </section>
+  </section>
+</article>

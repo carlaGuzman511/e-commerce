@@ -1,0 +1,14 @@
+spring:
+  config:
+    import: classpath:application.yml
+      
+server:
+  port: 8080
+
+jwt:
+  secret-key: ${JWT_SECRET_KEY}
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/

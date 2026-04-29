@@ -1,0 +1,26 @@
+<div class="modal-backdrop" (click)="backdropClick($event)">
+  <div
+    class="modal-dialog"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="modalTitle"
+    tabindex="-1"
+    #dialog
+  >
+    <header class="modal-header">
+      <h3 id="modalTitle">{{ title }}</h3>
+      <button class="close-btn" (click)="onFormCancel()" aria-label="Close">×</button>
+    </header>
+
+    <section class="modal-body">
+      <app-branch-form
+        [branchData]="initialData"
+        [formTitle]="title"
+        [isReadOnly]="isReadOnly"
+        submitLabel="Save"
+        (formSubmit)="onFormSubmit($event)"
+        (formCancel)="onFormCancel()">
+      </app-branch-form>
+    </section>
+  </div>
+</div>

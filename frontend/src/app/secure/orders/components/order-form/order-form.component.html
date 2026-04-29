@@ -1,0 +1,232 @@
+<div class="card">
+  <div class="card-body">
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <div class="form-grid">
+        <div class="group-section">
+          <generic-input-field
+            label="Branch ID"
+            name="branchId"
+            type="number"
+            [required]="true"
+            placeholder="Enter the branch id"
+            formControlName="branchId"
+            [error]="getFieldError('branchId')"
+            helperText=""
+            [isReadOnly]="isReadOnly"
+            className="branch-id-field">
+          </generic-input-field>
+
+          <generic-input-field
+            label="Total"
+            name="total"
+            type="number"
+            placeholder=""
+            [required]="true"
+            [error]="getFieldError('total')"
+            helperText=""
+            formControlName="total"
+            [isReadOnly]="isReadOnly"
+            className="total-field">
+          </generic-input-field>
+
+          <generic-input-field
+            label="Discounts"
+            name="discounts"
+            type="number"
+            placeholder="Enter the discounts"
+            [required]="true"
+            [error]="getFieldError('discounts')"
+            helperText=""
+            formControlName="discounts"
+            [isReadOnly]="isReadOnly"
+            className="discounts-field">
+          </generic-input-field>
+
+          <div class="group-grid">
+            <generic-select-field
+              label="Order Status"
+              name="orderStatus"
+              [disabled]="isReadOnly"
+              [options]="orderStatusOptions"
+              placeholder="Select status"
+              formControlName="orderStatus">
+            </generic-select-field>
+
+            <generic-select-field
+              label="Payment Method"
+              name="paymentMethod"
+              [disabled]="isReadOnly"
+              [options]="paymentMethodOptions"
+              placeholder="Select payment method"
+              formControlName="paymentMethod">
+            </generic-select-field>
+
+            <generic-select-field
+              label="Delivery Method"
+              [disabled]="isReadOnly"
+              name="deliveryMethod"
+              [options]="deliveryMethodOptions"
+              placeholder="Select delivery method"
+              formControlName="deliveryMethod">
+            </generic-select-field>
+          </div>
+        </div>
+        
+        <div class="group-section">
+          <h5>Order Items</h5>
+
+          <div formArrayName="items">
+            <div *ngFor="let item of items.controls; let i = index" [formGroupName]="i" class="order-item-grid">
+              
+              <generic-input-field
+                label="Product ID"
+                name="productId"
+                type="number"
+                placeholder=""
+                [required]="true"
+                helperText=""
+                formControlName="productId"
+                [isReadOnly]="isReadOnly"
+                className="item-productId-field"
+                [error]="getFieldError('items.' + i + '.productId')">
+              </generic-input-field>
+
+              <generic-input-field
+                label="Variant ID"
+                name="variantId"
+                type="number"
+                placeholder=""
+                helperText=""
+                [required]="true"
+                formControlName="variantId"
+                [isReadOnly]="isReadOnly"
+                className="item-variantId-field"
+                [error]="getFieldError('items.' + i + '.variantId')">
+              </generic-input-field>
+
+              <generic-input-field
+                label="Quantity"
+                name="quantity"
+                type="number"
+                placeholder=""
+                helperText=""
+                [required]="true"
+                [isReadOnly]="isReadOnly"
+                formControlName="quantity"
+                className="item-quantity-field"
+                [error]="getFieldError('items.' + i + '.quantity')">
+              </generic-input-field>
+
+              <generic-input-field
+                label="Price"
+                name="price"
+                type="number"
+                helperText=""
+                placeholder=""
+                [isReadOnly]="isReadOnly"
+                [required]="true"
+                formControlName="price"
+                className="item-price-field"
+                [error]="getFieldError('items.' + i + '.price')">
+              </generic-input-field>
+
+              <generic-input-field
+                label="Discount"
+                name="discount"
+                type="number"
+                placeholder=""
+                [required]="true"
+                helperText=""
+                formControlName="discount"
+                [isReadOnly]="isReadOnly"
+                className="item-discount-field"
+                [error]="getFieldError('items.' + i + '.discount')">
+              </generic-input-field>
+
+              <generic-input-field
+                label="Total"
+                name="total"
+                type="number"
+                placeholder=""
+                [required]="true"
+                formControlName="total"
+                helperText=""
+                [isReadOnly]="isReadOnly"
+                className="item-total-field"
+                [error]="getFieldError('items.' + i + '.total')">
+              </generic-input-field>
+            </div>
+          </div>          
+        </div>
+
+        <div class="address-section" formGroupName="address">
+          <h5>Address</h5>
+           <div class="address-grid">
+            <generic-input-field
+              label="Street"
+              name="street"
+              type="text"
+              placeholder="Enter the street name"
+              [required]="true"
+              [error]="getFieldError('address.street')"
+              helperText="Minimun 3 characters, maximun 100"
+              formControlName="street"
+              [isReadOnly]="isReadOnly"
+              className="street-field">
+            </generic-input-field>
+
+            <generic-input-field
+              label="City"
+              name="city"
+              type="text"
+              placeholder="Enter the city name"
+              [required]="true"
+              [error]="getFieldError('address.city')"
+              helperText="Minimun 3 characters, maximun 100"
+              formControlName="city" 
+              [isReadOnly]="isReadOnly"
+              className="city-field">
+            </generic-input-field>
+          </div>
+
+          <div class="address-grid">
+            <generic-input-field
+              label="Country"
+              name="country"
+              type="text"
+              [required]="true"
+              placeholder="Country"
+              [isReadOnly]="isReadOnly"
+              [error]="getFieldError('address.country')"
+              formControlName="country"
+              helperText="Minimun 3 characters, maximun 100"
+              className="country-field">
+            </generic-input-field>
+
+            <generic-input-field
+              label="Postal Code"
+              name="postalCode"
+              type="text"
+              placeholder="Postal Code"
+              [isReadOnly]="isReadOnly"
+              [error]="getFieldError('address.postalCode')"
+              formControlName="postalCode"
+              className="postal-code-field">
+            </generic-input-field>
+
+            <generic-input-field
+              label="State"
+              name="state"
+              [isReadOnly]="isReadOnly"
+              type="text"
+              placeholder="State"
+              [error]="getFieldError('address.state')"
+              formControlName="state"
+              className="state-field">
+            </generic-input-field>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

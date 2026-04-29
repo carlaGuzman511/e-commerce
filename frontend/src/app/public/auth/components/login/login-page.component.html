@@ -1,0 +1,35 @@
+<article class="login-container">
+  <section class="login-card-container">
+    <section class="login-card">
+      <img class="login-logo" src="../../../../../assets/svg/logo.svg" alt="logo">
+      <h1 class="login-title">SIGN IN</h1>
+      <form class="login-form" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+        <input class="login-input"
+               type="email"
+               placeholder="email"
+               formControlName="email"
+               [class.invalid]="email?.invalid && email?.touched"
+        >
+        <div class="login-error" *ngIf="email?.invalid && email?.touched">
+          <span *ngIf="email?.errors?.['required']">Email is required</span>
+          <span *ngIf="email?.errors?.['email']">Invalid email format</span>
+        </div>
+        <input class="login-input"
+               type="password"
+               placeholder="password"
+               formControlName="password"
+               [class.invalid]="password?.invalid && password?.touched"
+        >
+        <div class="login-error" *ngIf="password?.invalid && password?.touched">
+          <span *ngIf="password?.errors?.['required']">Password is required</span>
+          <span *ngIf="password?.errors?.['minlength']">Password must be at least 6 characters</span>
+        </div>
+        <div class="login-links">
+          <a class="login-link" (click)="openRegisterModal()">Register</a>
+        </div>
+        <button class="login-button" aria-label="login" title="login">Sign in</button>
+      </form>
+    </section>
+  </section>
+  <img class="login-banner" src="../../../../../assets/images/login_banner.png" alt="login_banner">
+</article>

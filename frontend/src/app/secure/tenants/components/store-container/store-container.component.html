@@ -1,0 +1,46 @@
+<div class="page-actions">
+  <div class="right-actions">
+    <div class="search-wrapper">
+      <input type="search" placeholder="Search" [(ngModel)]="query"/>
+    </div>
+  </div>
+
+  <div class="left-actions">
+    <generic-button
+      title="Add Store"
+      [buttonType]="buttonType.Primary"
+      (onClick)="openModal()">
+    </generic-button>
+  </div>
+</div>
+
+<section class="cards-area">
+  <ng-container *ngIf="(stores$ | async) as stores">
+    <div *ngIf="stores.length === 0" class="empty">No stores yet</div>
+
+    <div class="cards-grid">
+      <ng-container *ngFor="let store of stores; trackBy: trackByStoreId">
+        <app-store-card
+          *ngIf="!query || store.name?.toLowerCase()?.includes(query.toLowerCase())"
+          [store]="store"
+          (view)="onView($event)"
+          (edit)="onEdit($event)"
+          (remove)="onRemove($event)"
+        ></app-store-card>
+      </ng-container>
+    </div>
+  </ng-container>
+</section>
+
+<app-store-modal
+  [title]="(selectedStore$ | async) ? 'Edit Store' : 'Create Store'"
+  [mode]="isModalMode"
+  [initialData]="selectedStore$ | async"
+  (save)="onModalSubmit($event)"
+  (cancel)="onModalCancel()"
+  *ngIf="isModalOpen">
+</app-store-modal>
+
+<div class="spinner-overlay" *ngIf="(loading$ | async)">
+  <div class="spinner"></div>
+</div>

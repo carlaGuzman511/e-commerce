@@ -1,0 +1,934 @@
+{
+	"info": {
+		"_postman_id": "8d1f1d23-6e7b-499a-85aa-e143e85d628e",
+		"name": "e-commerce",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "11361601",
+		"_collection_link": "https://bold-escape-737899.postman.co/workspace/My-Workspace~461875c0-a910-4e64-8a2d-f10981b0a909/collection/11361601-8d1f1d23-6e7b-499a-85aa-e143e85d628e?action=share&source=collection_link&creator=11361601"
+	},
+	"item": [
+		{
+			"name": "products-service",
+			"item": [
+				{
+					"name": "category",
+					"item": [
+						{
+							"name": "createCategory",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "X-Tenant-Id",
+										"value": "hiper-01"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n        \"name\": \"Home Appliances\",\n        \"description\": \"Appliances and equipment for home use such as refrigerators, microwaves, and washing machines.\",\n        \"active\": true\n      }",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8087/api/v1/categories",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8087",
+									"path": [
+										"api",
+										"v1",
+										"categories"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "product",
+					"item": [
+						{
+							"name": "create Product",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "X-Tenant-ID",
+										"value": "hiper-01"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"name\": \"Wirelssess Mouse\",\n  \"brand\": \"LogiTech\",\n  \"description\": \"Compact ergonomic wireless mouse with silent clicks.\",\n  \"technicalDetails\": \"Bluetooth 5.0, 1600 DPI, USB-C rechargeable\",\n  \"categoryId\": 1,\n  \"minStock\": 10,\n  \"variants\": [\n    {\n      \"sku\": \"MOUSE-BLK-001\",\n      \"description\": \"Black color variant\",\n      \"price\": 25.99,\n      \"attributes\": { \"color\": \"black\", \"connectivity\": \"bluetooth\" },\n      \"branchStocks\": [\n        { \"branchId\": 1, \"stock\": 50 }\n      ]\n    }\n  ]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8087/api/v1/products",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8087",
+									"path": [
+										"api",
+										"v1",
+										"products"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "getProduct",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "X-Tenant-Id",
+										"value": "hiper-01"
+									}
+								],
+								"url": {
+									"raw": "http://localhost:8087/api/v1/products/2",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8087",
+									"path": [
+										"api",
+										"v1",
+										"products",
+										"2"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "getStock",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "X-Tenant-ID",
+										"value": "hiper-01"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"branchId\": 1,\n  \"variantId\": 2,\n  \"requested\": 5\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8087/api/v1/products/stock/check",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8087",
+									"path": [
+										"api",
+										"v1",
+										"products",
+										"stock",
+										"check"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "reserve stock",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "X-Tenant-Id",
+										"value": "hiper-01",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "[\n  {\"branchId\": 1, \"variantId\": 2, \"quantity\": 3}\n]",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8087/api/v1/products/stock/reserve",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8087",
+									"path": [
+										"api",
+										"v1",
+										"products",
+										"stock",
+										"reserve"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "restore stock",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "X-Tenant-ID",
+										"value": "hiper-01"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "[\n  {\"branchId\": 1, \"variantId\": 2, \"quantity\": 5}\n\n]",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8087/api/v1/products/stock/restore",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8087",
+									"path": [
+										"api",
+										"v1",
+										"products",
+										"stock",
+										"restore"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "orders-service",
+			"item": [
+				{
+					"name": "anonymous",
+					"item": [
+						{
+							"name": "delete anonymous cart",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8084/api/v1/cart/anonymous/12",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8084",
+									"path": [
+										"api",
+										"v1",
+										"cart",
+										"anonymous",
+										"12"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get anonymous cart by id",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8084/api/v1/cart/anonymous/anon123",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8084",
+									"path": [
+										"api",
+										"v1",
+										"cart",
+										"anonymous",
+										"anon123"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "create anonymous cart",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "[\r\n  {\"productId\":1, \"name\":\"Laptop\", \"quantity\":1, \"price\":1200},\r\n  {\"productId\":2, \"name\":\"Mouse\", \"quantity\":2, \"price\":25}\r\n]",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8084/api/v1/cart/anonymous/123",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8084",
+									"path": [
+										"api",
+										"v1",
+										"cart",
+										"anonymous",
+										"123"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "orders",
+					"item": [
+						{
+							"name": "create order 1 valid",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "X-Tenant-Id",
+										"value": "tenant_1",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n   \"userId\": 1,\r\n   \"paymentMethod\": 1,\r\n   \"deliveryMethod\": 1,\r\n   \"branchId\": 2,\r\n   \"total\": 73.00,\r\n   \"discounts\": 5.50,\r\n   \"items\":[\r\n        {\r\n            \"productId\": 1,\r\n            \"variantId\": 1,\r\n            \"quantity\": 2,\r\n            \"price\": 12.50,\r\n            \"discount\": 2.50,\r\n            \"total\": 20.00\r\n        },\r\n        {\r\n            \"productId\": 2,\r\n            \"variantId\": 1,\r\n            \"quantity\": 1,\r\n            \"price\": 5.50,\r\n            \"discount\": 0.50,\r\n            \"total\": 5.00\r\n        },\r\n                {\r\n            \"productId\": 3,\r\n            \"variantId\": 3,\r\n            \"quantity\": 4,\r\n            \"price\": 12.00,\r\n            \"discount\": 0.00,\r\n            \"total\": 48.00\r\n        }\r\n    ],\r\n   \"shippingAddress\": {\r\n        \"street\":\"Calle 1\",\r\n        \"city\":\"Cochabamba\",\r\n        \"postalCode\":\"0000\",\r\n        \"country\":\"BO\"\r\n    }\r\n }\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8084/api/v1/orders",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8084",
+									"path": [
+										"api",
+										"v1",
+										"orders"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "update order",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "X-Tenant-Id",
+										"value": "tenant_1",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n   \"userId\": 1,\r\n   \"paymentMethod\": 1,\r\n   \"deliveryMethod\": 1,\r\n   \"branchId\": 5,\r\n   \"items\":[\r\n        {\r\n            \"id\": 4,\r\n            \"productId\": 1,\r\n            \"quantity\": 2,\r\n            \"price\": 12.50,\r\n            \"discount\": 2.50,\r\n            \"total\": 20.00\r\n        },\r\n        {\r\n            \"id\": 5,\r\n            \"productId\": 2,\r\n            \"quantity\": 1,\r\n            \"price\": 5.50,\r\n            \"discount\": 0.50, \r\n            \"total\": 5.00\r\n        },\r\n        {\r\n            \"id\": 6,\r\n            \"productId\": 3,\r\n            \"quantity\": 4,\r\n            \"price\": 12.00,\r\n            \"discount\": 0.00,\r\n            \"total\": 48.00\r\n        }\r\n    ],\r\n   \"shippingAddress\": {\r\n        \"street\":\"Calle 1\",\r\n        \"city\":\"Cochabamba\",\r\n        \"postalCode\":\"0000\",\r\n        \"country\":\"BO\"\r\n    }\r\n }\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8084/api/v1/orders/2",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8084",
+									"path": [
+										"api",
+										"v1",
+										"orders",
+										"2"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "create order 2 invalid",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "X-Tenant-Id",
+										"value": "tenant_1",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n   \"userId\": 1,\r\n   \"paymentMethod\": 1,\r\n   \"deliveryMethod\": 1,\r\n   \"branchId\": 2,\r\n   \"items\":[\r\n        {\r\n            \"productId\": 1,\r\n            \"variantId\": 2,\r\n            \"quantity\": -2,\r\n            \"price\": 12.50,\r\n            \"discount\": 2.50\r\n        },\r\n        {\r\n            \"productId\": null,\r\n            \"variantId\": null,\r\n            \"quantity\": 1,\r\n            \"price\": -5.50,\r\n            \"discount\": 0.50\r\n        },\r\n        {\r\n            \"productId\": 3,\r\n            \"variantId\": 1,\r\n            \"quantity\": 4,\r\n            \"price\": 12.00,\r\n            \"discount\": -10.00\r\n        }\r\n    ],\r\n   \"shippingAddress\": {\r\n        \"street\":\"Calle 1\",\r\n        \"city\":\"Cochabamba\",\r\n        \"postalCode\":\"0000\",\r\n        \"country\":\"BO\"\r\n    }\r\n }\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8084/api/v1/orders",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8084",
+									"path": [
+										"api",
+										"v1",
+										"orders"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get order by id",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "X-Tenant-Id",
+										"value": "tenant_1",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://localhost:8084/api/v1/orders/2",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8084",
+									"path": [
+										"api",
+										"v1",
+										"orders",
+										"2"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "cancel order",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "X-Tenant-ID",
+										"value": "tenant_1",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8084/api/v1/orders/5/cancel",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8084",
+									"path": [
+										"api",
+										"v1",
+										"orders",
+										"5",
+										"cancel"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "update order status",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "X-Tenant-ID",
+										"value": "tenant_1",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"orderStatus\": \"PAID\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8084/api/v1/orders/6/status",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8084",
+									"path": [
+										"api",
+										"v1",
+										"orders",
+										"6",
+										"status"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get all orders",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "X-Tenant-Id",
+										"value": "tenant_1",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://localhost:8084/api/v1/orders",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8084",
+									"path": [
+										"api",
+										"v1",
+										"orders"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get all orders by status",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "X-Tenant-Id",
+										"value": "tenant_1",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://localhost:8084/api/v1/orders?orderStatus=PAID",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8084",
+									"path": [
+										"api",
+										"v1",
+										"orders"
+									],
+									"query": [
+										{
+											"key": "orderStatus",
+											"value": "PAID"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get all orders by dates",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "X-Tenant-Id",
+										"value": "tenant_1",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://localhost:8084/api/v1/orders?startDate=2025-09-10&endDate=2025-10-10",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8084",
+									"path": [
+										"api",
+										"v1",
+										"orders"
+									],
+									"query": [
+										{
+											"key": "startDate",
+											"value": "2025-09-10"
+										},
+										{
+											"key": "endDate",
+											"value": "2025-10-10"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get all orders by filters",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "X-Tenant-Id",
+										"value": "tenant_1",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://localhost:8084/api/v1/orders?orderStatus=PAID&startDate=2025-09-10&endDate=2025-10-10",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8084",
+									"path": [
+										"api",
+										"v1",
+										"orders"
+									],
+									"query": [
+										{
+											"key": "orderStatus",
+											"value": "PAID"
+										},
+										{
+											"key": "startDate",
+											"value": "2025-09-10"
+										},
+										{
+											"key": "endDate",
+											"value": "2025-10-10"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get all orders by pagination",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "X-Tenant-Id",
+										"value": "tenant_1",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://localhost:8084/api/v1/orders?page=1&size=10",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8084",
+									"path": [
+										"api",
+										"v1",
+										"orders"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "1"
+										},
+										{
+											"key": "size",
+											"value": "10"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "tenants-service",
+			"item": [
+				{
+					"name": "stores",
+					"item": [
+						{
+							"name": "create store",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "X-Tenant-Id",
+										"value": "tenant_1",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"Farmacorp\",\r\n    \"currency\": \"BS\",\r\n    \"defaultLanguage\": \"ES\",\r\n    \"timezone\": \"UTC-4\",\r\n    \"ownerName\": \"Juan Perez\",\r\n    \"ownerInfo\": \"Av America Nro 856 Telefono: 76981706\",\r\n    \"info\": \"Compra lo que necesitas las 24 horas del día desde la Web y te lo enviamos a tu dirección. Encontrarás ofertas exclusivas según la temporada\",\r\n    \"address\": {\r\n        \"street\": \"av, santa Cruz\",\r\n        \"city\": \"cochabamba\",\r\n        \"postalCode\": \"abc\",\r\n        \"country\": \"Bolivia\",\r\n        \"state\": \"\"\r\n    }\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8082/api/v1/stores",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8082",
+									"path": [
+										"api",
+										"v1",
+										"stores"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get store by id/tenant",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "X-Tenant-Id",
+										"value": "tenant_1",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://localhost:8082/api/v1/stores/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8082",
+									"path": [
+										"api",
+										"v1",
+										"stores",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get stores by filters",
+							"request": {
+								"method": "GET",
+								"header": []
+							},
+							"response": []
+						},
+						{
+							"name": "remove store by id",
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "X-Tenant-Id",
+										"value": "tenant_1",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://localhost:8082/api/v1/stores/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8082",
+									"path": [
+										"api",
+										"v1",
+										"stores",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "update store by id",
+							"request": {
+								"method": "GET",
+								"header": []
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "branches",
+					"item": [
+						{
+							"name": "create branch",
+							"request": {
+								"method": "POST",
+								"header": []
+							},
+							"response": []
+						},
+						{
+							"name": "get branch",
+							"request": {
+								"method": "POST",
+								"header": []
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "reports-service",
+			"item": []
+		},
+		{
+			"name": "auth-service",
+			"item": [
+				{
+					"name": "Search User",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "analytics-service",
+			"item": []
+		},
+		{
+			"name": "multimedia-service",
+			"item": [
+				{
+					"name": "New Request",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

@@ -1,0 +1,29 @@
+<div class="order-card" role="group" aria-label="Order card">
+  <div class="card-header">
+    <div class="order-title">Order #{{ order.id }}</div>
+    <div class="status"
+      [ngClass]="getStatusClass(order.orderStatus)">
+      {{ getStatusClass(order.orderStatus) }}
+    </div>
+
+    <button
+      class="menu-btn"
+      (click)="toggleMenu()"
+      aria-label="Actions"
+      type="button"
+    >
+      ⋮
+    </button>
+
+    <div class="card-menu" *ngIf="menuOpen" role="menu">
+      <button type="button" (click)="onView()">Review</button>
+      <button type="button" (click)="onRemove()">Remove</button>
+    </div>
+  </div>
+
+  <div class="card-body">
+    <div class="info">Delivery Method {{ order.deliveryMethod }}</div>
+    <div class="info">Payment Method {{ order.paymentMethod }}</div>
+    <div class="info">Total {{ order.total }}</div>
+  </div>
+</div>

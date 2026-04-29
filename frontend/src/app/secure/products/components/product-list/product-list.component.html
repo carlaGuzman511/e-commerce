@@ -1,0 +1,12 @@
+<article class="product-list-container">
+  <app-large-card
+    *ngFor="let product of (products$ | async); trackBy: trackByCard"
+    [image]="product.variants && product.variants[0].images && product.variants[0].images.length > 0
+         ? product.variants[0].images[0].url
+         : ''"
+    [price]="product.variants && product.variants[0].price + ' $'"
+    [title]="product.name"
+    [description]="product.description"
+    [isEnablePanelButton]="true"
+  ></app-large-card>
+</article>

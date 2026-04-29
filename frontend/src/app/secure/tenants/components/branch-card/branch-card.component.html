@@ -1,0 +1,28 @@
+<div class="branch-card" role="group" aria-label="Branch card">
+  <div class="card-header">
+    <div class="branch-title">{{ branch.name }}</div>
+    <div class="status" [ngClass]="{ 'active': branch.active === true, 'inactive': branch.active === false }">
+      {{ branch.active === true ? 'Active' : (branch.active === false ? 'Inactive' : (branch.active || 'Active')) }}
+    </div>
+
+    <button
+      class="menu-btn"
+      (click)="toggleMenu()"
+      aria-label="Actions"
+      type="button"
+    >
+      ⋮
+    </button>
+
+    <div class="card-menu" *ngIf="isMenuOpen" role="menu">
+      <button type="button" (click)="onView()">Review</button>
+      <button type="button" (click)="onEdit()">Edit</button>
+      <button type="button" (click)="onRemove()">Remove</button>
+    </div>
+  </div>
+
+  <div class="card-body">
+    <div class="info">opening hours: {{ branch.openingHours }}</div>
+    <div class="info">closing hours: {{ branch.closingHours }}</div>
+  </div>
+</div>

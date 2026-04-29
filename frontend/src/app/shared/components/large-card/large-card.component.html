@@ -1,0 +1,42 @@
+<article class="card-container">
+  <section class="card-media"
+           (click)="viewProduct.emit()">
+    <img class="card-image"
+         [src]="image"
+         alt="product image"/>
+
+    <div class="card-discount"
+         *ngIf="price">
+      <span>{{ price }}</span>
+    </div>
+
+    <div class="card-category"
+         *ngIf="category">
+      <span>{{ category }}</span>
+    </div>
+  </section>
+
+  <section class="card-info">
+
+    <div class="card-star">
+      <span class="card-discount-through">{{ discountThrough }}</span>
+
+      <span class="icon-star-filled card-icon-star"
+            *ngIf="starPoint">
+        <p>{{starPoint}}</p>
+      </span>
+    </div>
+
+    <span class="card-title">{{ title }}</span>
+
+    <div class="card-description">{{ description }}</div>
+
+    <div class="card-panel"
+         *ngIf="isEnablePanelButton">
+      <i class="icon-edit-bold-filled"
+         (click)="editProduct.emit()"></i>
+      <i class="icon-trash-filled icon-button"
+         (click)="deleteProduct.emit()"></i>
+    </div>
+  </section>
+</article>

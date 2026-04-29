@@ -1,0 +1,12 @@
+<article class="categories-container">
+  <section *ngFor="let category of (categories$ | async); trackBy: trackByCategory">
+    <app-card-info [title]="category.name"
+                   [icon]="category.icon | categoryIcon">
+      <div class="card-panel">
+        <i class="icon-edit-bold-filled"
+           (click)="editCategory(category)"></i>
+      </div>
+    </app-card-info>
+  </section>
+</article>
+

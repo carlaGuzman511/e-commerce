@@ -1,0 +1,23 @@
+<div class="form-field" [class]="className" [ngClass]="{'has-error': error, 'is-disabled': disabled}">
+  <label class="form-label" *ngIf="label" [for]="name">
+    {{ label }} 
+    <span class="required" *ngIf="required">*</span>
+  </label>
+  <input
+    [type]="type"
+    [id]="name"
+    [name]="name"
+    [value]="value"
+    [placeholder]="placeholder"
+    [readonly]="isReadOnly"
+    [required]="required"
+    [disabled]="disabled"
+    [class]="'form-input ' + (error ? 'error' : '')"
+    [class.valid]="!error && value"
+    (input)="handleInput($event)"
+    (blur)="handleBlur()"
+  />
+      
+  <div class="error-message" *ngIf="error" role="alert">{{ error }}</div>
+  <div class="helper-text" *ngIf="helperText && !error">{{ helperText }}</div>
+</div>

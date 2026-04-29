@@ -1,0 +1,78 @@
+<article>
+  <ng-container *ngIf="product$ | async as product; else loading">
+    <section class="product-details-container">
+      <section class="product-detail-image">
+        <img [src]="product.variants && product.variants[0].images[0].url">
+      </section>
+
+      <section>
+        <div class="product-detail-info">
+          <h1 class="product-detail-title">
+            {{product.name}}
+          </h1>
+
+          <span class="product-code">{{product.variants[0].productCode}}</span>
+
+          <div class="product-price-block">
+            <span class="product-detail-price">{{product.variants[0].price + ' $'}}</span>
+          </div>
+
+          <generic-select-field class="product-field"
+                                formControlName="categoryId"
+                                label="Variant"
+                                [options]="options"
+                                [required]="true"
+                                *ngIf="optionVariant | async as options">
+          </generic-select-field>
+
+          <div class="product-detail-cart-action">
+            <div class="product-detail-cant-button">
+              <button (click)="decrement()">-</button>
+
+              <span>{{ quantity }}</span>
+
+              <button (click)="increment(product.variants[0])">+</button>
+
+            </div>
+
+            <generic-button
+              title="Add to cart"
+              [iconClass]="'icon-cart-light1'"
+              [iconPosition]="ICON_POSITION.Right"
+              [buttonType]="BUTTON_TYPE.Secondary_cta"
+              (onClick)="addToCart(product)">
+            </generic-button>
+          </div>
+
+          <div class="product-detail-options">
+            <section>
+              <app-card-info [title]="'Free Delivery'"
+                             icon="icon-fast-delivery-filled">
+                <span class="product-detail-delivery">It arrives in up to 5 business days</span>
+              </app-card-info>
+            </section>
+          </div>
+        </div>
+      </section>
+    </section>
+
+    <section class="product-detail-info">
+      <h1>Description</h1>
+
+      <span>{{product.description}}</span>
+
+      <h1>Details</h1>
+
+      <span>{{product.technicalDetails}}</span>
+    </section>
+  </ng-container>
+
+  <ng-template #loading>
+    <div class="product-not-fount-content">
+      <img src="assets/images/product-not-found.webp">
+    </div>
+  </ng-template>
+</article>
+
+
+

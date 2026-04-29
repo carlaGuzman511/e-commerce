@@ -1,0 +1,55 @@
+.cards-area {
+  padding: 18px;
+}
+
+.cards-grid {
+  display:grid;
+  gap: 14px;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+}
+
+.empty {
+  color: var(--gray-600);
+  padding: 40px;
+  text-align:center;
+}
+
+generic-button {
+  min-width: 150px;
+  padding: 8px 16px;
+}
+
+.left-actions {
+  align-items: center;
+  display: flex;
+}
+
+.page-actions {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  padding: 18px;
+  width: 100%;
+}
+
+.right-actions {
+  align-items: center;
+  display: flex;
+}
+
+.search-wrapper {
+  align-items: center;
+  background: #f3f4f6;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  display: flex;
+  padding: 4px 8px;
+}
+
+.search-wrapper input {
+  background: transparent;
+  border: none;
+  outline: none;
+  padding: 6px 10px;
+  width: 300px;
+}

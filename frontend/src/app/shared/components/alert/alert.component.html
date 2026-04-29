@@ -1,0 +1,10 @@
+<div [class]="'fade-in-right alert-container ' + getAlertClass()"
+     *ngIf="isShow">
+  <span class="alert-icon"
+        [class]="iconClass"></span>
+  <div class="alert-content-container">
+    <span class="alert-title">{{ title }}</span>
+    <span>{{ message }}</span>
+  </div>
+  <button class="alert-close" (click)="close()">×</button>
+</div>

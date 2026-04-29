@@ -1,0 +1,21 @@
+<div class="form-field" [class]="className" [ngClass]="{'has-error': error, 'is-disabled': disabled}">
+  <label class="form-label" *ngIf="label" [for]="name" >
+    {{ label }} 
+    <span class="required" *ngIf="required" >*</span>
+    <input
+      type="checkbox"
+      [id]="name"
+      [name]="name"
+      [checked]="checked"
+      [required]="required"
+      [disabled]="disabled"
+      class="checkbox-input"
+      [class.valid]="!error && value"
+      [value]="value"
+      (input)="handleInput($event)"
+      (blur)="handleBlur()"
+    />
+  </label>
+  <div class="error-message" *ngIf="error" role="alert">{{ error }}</div>
+  <div class="helper-text" *ngIf="helperText && !error">{{ helperText }}</div>
+</div>

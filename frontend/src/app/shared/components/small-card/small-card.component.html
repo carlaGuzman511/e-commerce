@@ -1,0 +1,20 @@
+<article class="card">
+  <section class="card-media">
+    <img class="card-image"
+         alt="product image"
+         [src]="image"/>
+
+    <div class="card-discount"
+         *ngIf="discount">
+      <span>{{ discount }}</span>
+    </div>
+  </section>
+
+  <section class="card-info">
+    <span class="card-title">{{ title }}</span>
+
+    <ng-content></ng-content>
+
+    <span class="card-description">{{ description }}</span>
+  </section>
+</article>

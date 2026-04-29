@@ -1,0 +1,36 @@
+<div class="page-actions">
+  <div class="right-actions">
+    <div class="search-wrapper">
+      <input type="search" placeholder="Search" [(ngModel)]="query" />
+    </div>
+  </div>
+</div>
+
+<section class="cards-area">
+  <ng-container *ngIf="(orders$ | async) as orders">
+    <div *ngIf="orders.length === 0" class="empty">No orders yet</div>
+
+    <div class="cards-grid">
+      <ng-container *ngFor="let order of orders; trackBy: trackByOrder">
+        <app-order-card
+          *ngIf="!query || OrderStatus[order.orderStatus]?.toLowerCase()?.includes(query.toLowerCase())"
+          [order]="order"
+          (view)="onView($event)"
+          (remove)="onRemove($event)"
+        ></app-order-card>
+      </ng-container>
+    </div>
+  </ng-container>
+</section>
+
+<app-order-modal
+  [title]="(selectedOrder$ | async) ? 'Edit Order' : 'Create Order'"
+  [mode]="modalMode"
+  [initialData]="selectedOrder$ | async"
+  (cancel)="onModalCancel()"
+  *ngIf="isModalOpen">
+</app-order-modal>
+
+<div class="spinner-overlay" *ngIf="(loading$ | async)">
+  <div class="spinner"></div>
+</div>

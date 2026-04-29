@@ -1,0 +1,188 @@
+<div class="card">
+  <div class="card-body">
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <div class="form-grid">
+
+        <div class="group-section">
+          <div class="group-grid">
+            <generic-input-field
+              label="Store name"
+              name="name"
+              type="text"
+              placeholder="Enter the store name"
+              [required]="true"
+              [error]="getFieldError('name')"
+              helperText="Minimun 3 characters, maximun 100"
+              formControlName="name"
+              [isReadOnly]="isReadOnly"
+              className="store-name-field">
+            </generic-input-field>
+
+            <generic-text-area-field
+              label="Store Information"
+              name="info"
+              placeholder="Describe the store information"
+              [required]="true"
+              [rows]="4"
+              [error]="getFieldError('info')"
+              helperText="Minimun 10, maximun 500 characters"
+              formControlName="info"
+              [isReadOnly]="isReadOnly"
+              className="store-information-field">
+            </generic-text-area-field>
+          </div>
+
+          <div class="group-grid">
+            <generic-select-field
+              label="Currency"
+              name="currency"
+              [options]="currencies"
+              [required]="true"
+              [error]="getFieldError('currency')"
+              placeholder="Select a currency"
+              formControlName="currency"
+              [disabled]="isReadOnly"
+              className="store-currency-field">
+            </generic-select-field>
+
+            <generic-select-field
+              label="Default Language"
+              name="defaultLanguage"
+              [options]="defaultLanguages"
+              [required]="true"
+              [error]="getFieldError('defaultLanguage')"
+              placeholder="Select a default language"
+              formControlName="defaultLanguage"
+              [disabled]="isReadOnly"
+              className="default-language-field">
+            </generic-select-field>
+            
+            <generic-select-field
+              label="Timezone"
+              name="timezone"
+              [options]="timezones"
+              [required]="true"
+              [error]="getFieldError('timezone')"
+              placeholder="Select a timezone"
+              formControlName="timezone"
+              [disabled]="isReadOnly"
+              className="timezone-field">
+            </generic-select-field>
+          </div>
+        </div>
+
+        <div class="group-section">
+          <div class="group-grid">
+            <generic-input-field
+              label="Owner name"
+              name="ownerName"
+              type="text"
+              placeholder="Enter the owner name"
+              [required]="true"
+              [error]="getFieldError('ownerName')"
+              helperText="Minimun 3 characters, maximun 100"
+              formControlName="ownerName"
+              [isReadOnly]="isReadOnly"
+              className="owner-name-field">
+            </generic-input-field>
+
+            <generic-text-area-field
+              label="Owner Information"
+              name="ownerInfo"
+              placeholder="Describe the owner information"
+              [required]="true"
+              [rows]="4"
+              [error]="getFieldError('ownerInfo')"
+              helperText="Minimun 10, maximun 500 characters"
+              formControlName="ownerInfo"
+              [isReadOnly]="isReadOnly"
+              className="owner-information-field">
+            </generic-text-area-field>  
+          </div>
+        </div>
+
+        <div class="address-section" formGroupName="address">
+          <h5>Address</h5>
+           <div class="address-grid">
+            <generic-input-field
+              label="Street"
+              name="street"
+              type="text"
+              placeholder="Enter the street name"
+              [required]="true"
+              [error]="getFieldError('address.street')"
+              helperText="Minimun 3 characters, maximun 100"
+              formControlName="street"
+              [isReadOnly]="isReadOnly"
+              className="street-field">
+            </generic-input-field>
+
+            <generic-input-field
+              label="City"
+              name="city"
+              type="text"
+              placeholder="Enter the city name"
+              [required]="true"
+              [error]="getFieldError('address.city')"
+              helperText="Minimun 3 characters, maximun 100"
+              formControlName="city" 
+              [isReadOnly]="isReadOnly"
+              className="city-field">
+            </generic-input-field>
+          </div>
+
+          <div class="address-grid">
+            <generic-input-field
+              label="Country"
+              name="country"
+              type="text"
+              [required]="true"
+              placeholder="Country"
+              [isReadOnly]="isReadOnly"
+              [error]="getFieldError('address.country')"
+              formControlName="country"
+              helperText="Minimun 3 characters, maximun 100"
+              className="country-field">
+            </generic-input-field>
+
+            <generic-input-field
+              label="Postal Code"
+              name="postalCode"
+              type="text"
+              placeholder="Postal Code"
+              [isReadOnly]="isReadOnly"
+              [error]="getFieldError('address.postalCode')"
+              formControlName="postalCode"
+              className="postal-code-field">
+            </generic-input-field>
+
+            <generic-input-field
+              label="State"
+              name="state"
+              [isReadOnly]="isReadOnly"
+              type="text"
+              placeholder="State"
+              [error]="getFieldError('address.state')"
+              formControlName="state"
+              className="state-field">
+            </generic-input-field>
+          </div>
+        </div>
+      </div>
+      
+      <div class="form-footer" *ngIf="!isReadOnly">
+        <generic-button
+          title="Cancel"
+          [buttonType]="buttonType.Secondary"
+          (onClick)="onCancel()">
+        </generic-button>
+        <generic-button
+          [title]="submitLabel"
+          [disabled]="form.invalid"
+          [buttonType]="buttonType.Primary"
+          (ngSubmit)="onSubmit()">
+        </generic-button>
+      </div>
+    </form>
+  </div>
+</div>

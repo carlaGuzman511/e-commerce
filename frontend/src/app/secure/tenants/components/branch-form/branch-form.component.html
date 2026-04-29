@@ -1,0 +1,162 @@
+<div class="card">
+  <div class="card-body">
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <div class="form-grid">
+        <div class="group-section">
+          <div class="group-grid">
+            <generic-input-field
+              label="Branch Name"
+              name="name"
+              type="text"
+              placeholder="Enter the branch name"
+              [required]="true"
+              [error]="getFieldError('name')"
+              helperText="Minimun 3 characters, maximun 100"
+              formControlName="name"
+              [isReadOnly]="isReadOnly"
+              className="branch-name-field">
+            </generic-input-field>
+            
+            <generic-input-field
+              label="Opening Hours"
+              name="openingHours"
+              type="text"
+              placeholder="Enter the opening hours"
+              [required]="true"
+              [error]="getFieldError('openingHours')"
+              helperText=""
+              formControlName="openingHours"
+              [isReadOnly]="isReadOnly"
+              className="branch-openingHours-field">
+            </generic-input-field>
+
+            <generic-input-field
+              label="Closing Hours"
+              name="closingHours"
+              type="text"
+              placeholder="Enter the closing hours"
+              [required]="true"
+              [error]="getFieldError('closingHours')"
+              helperText=""
+              formControlName="closingHours"
+              [isReadOnly]="isReadOnly"
+              className="branch-closingHours-field">
+            </generic-input-field>
+        </div>
+      </div>
+
+        <div class="group-section">
+          <div class="group-grid">
+            <generic-input-field
+              label="Manager Name"
+              name="managerName"
+              type="text"
+              placeholder="Enter the manager name"
+              [required]="true"
+              [error]="getFieldError('managerName')"
+              helperText="Minimun 3 characters, maximun 100"
+              formControlName="managerName"
+              [isReadOnly]="isReadOnly"
+              className="manager-name-field">
+            </generic-input-field>
+
+            <generic-input-field
+              label="Manager Phone"
+              name="managerPhone"
+              type="text"
+              placeholder="Enter the manager phone"
+              [required]="true"
+              [error]="getFieldError('managerPhone')"
+              helperText="Minimun 3 characters, maximun 100"
+              formControlName="managerPhone"
+              [isReadOnly]="isReadOnly"
+              className="manager-phone-field">
+            </generic-input-field>
+          </div>
+        </div>
+
+        <div class="address-section" formGroupName="address">
+          <h5>Address</h5>
+           <div class="address-grid">
+            <generic-input-field
+              label="Street"
+              name="street"
+              type="text"
+              placeholder="Enter the street name"
+              [required]="true"
+              [error]="getFieldError('address.street')"
+              helperText="Minimun 3 characters, maximun 100"
+              formControlName="street"
+              [isReadOnly]="isReadOnly"
+              className="street-field">
+            </generic-input-field>
+
+            <generic-input-field
+              label="City"
+              name="city"
+              type="text"
+              placeholder="Enter the city name"
+              [required]="true"
+              [error]="getFieldError('address.city')"
+              helperText="Minimun 3 characters, maximun 100"
+              formControlName="city" 
+              [isReadOnly]="isReadOnly"
+              className="city-field">
+            </generic-input-field>
+          </div>
+
+          <div class="address-grid">
+            <generic-input-field
+              label="Country"
+              name="country"
+              type="text"
+              [required]="true"
+              placeholder="Country"
+              [isReadOnly]="isReadOnly"
+              [error]="getFieldError('address.country')"
+              formControlName="country"
+              helperText="Minimun 3 characters, maximun 100"
+              className="country-field">
+            </generic-input-field>
+
+            <generic-input-field
+              label="Postal Code"
+              name="postalCode"
+              type="text"
+              placeholder="Postal Code"
+              [isReadOnly]="isReadOnly"
+              [error]="getFieldError('address.postalCode')"
+              formControlName="postalCode"
+              className="postal-code-field">
+            </generic-input-field>
+
+            <generic-input-field
+              label="State"
+              name="state"
+              [isReadOnly]="isReadOnly"
+              type="text"
+              placeholder="State"
+              [error]="getFieldError('address.state')"
+              formControlName="state"
+              className="state-field">
+            </generic-input-field>
+          </div>
+        </div>
+      </div>
+      
+      <div class="form-footer" *ngIf="!isReadOnly">
+        <generic-button
+          title="Cancel"
+          [buttonType]="buttonType.Secondary"
+          (onClick)="onCancel()">
+        </generic-button>
+        <generic-button
+          [title]="submitLabel"
+          [disabled]="form.invalid"
+          [buttonType]="buttonType.Primary"
+          (ngSubmit)="onSubmit()">
+        </generic-button>
+      </div>
+    </form>
+  </div>
+</div>

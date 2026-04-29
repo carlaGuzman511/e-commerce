@@ -1,0 +1,26 @@
+<article>
+  <section class="product-actions">
+    <div class="product-right-action">
+      <div class="search-wrapper">
+        <input type="search" placeholder="Search"/>
+      </div>
+    </div>
+
+    <div class="left-actions">
+      <generic-button
+        title="Add Product"
+        [iconClass]="'icon-plus-filled'"
+        [iconPosition]="ICON_POSITION.Left"
+        [buttonType]="BUTTON_TYPE.Primary"
+        (onClick)="openModal()">
+      </generic-button>
+    </div>
+  </section>
+
+  <app-secure-product-list></app-secure-product-list>
+
+  <ng-container *ngIf="isOpen">
+    <app-modal-product-create (closeEvent)="closeModal()"></app-modal-product-create>
+  </ng-container>
+</article>
+

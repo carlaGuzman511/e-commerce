@@ -1,0 +1,102 @@
+pipeline {
+    agent any
+
+    tools {
+        nodejs "node14"
+    }
+
+    environment {
+        DOCKER_IMAGE = "m011y/frontend-angular"
+        GIT_CREDENTIALS = "DHMp2GitlabCredentials"
+        DOCKERHUB_CREDENTIALS = "dockerhub-creds"
+        SONAR_SERVER_NAME = "sonarqube-server"
+    }
+
+    parameters {
+        booleanParam(
+            name: 'RUN_SONARQUBE',
+            defaultValue: false,
+            description: 'Run SonarQube Analysis'
+        )
+    }
+
+    stages {
+
+        stage('Checkout') {
+            steps {
+                sh 'git config --global http.sslverify false'
+                git credentialsId: env.GIT_CREDENTIALS,
+                    branch: 'master',
+                    url: 'https://git.digitalharborbolivia.com:8081/bootcampmidpathv2/kiosko/frontend'
+            }
+        }
+
+        stage('Build Angular') {
+            steps {
+                sh '''
+                    npm install
+                    npm run build
+                '''
+                archiveArtifacts artifacts: 'dist/**/*', allowEmptyArchive: false
+            }
+        }
+
+        stage('SonarQube Analysis') {
+            when {
+                expression { params.RUN_SONARQUBE }
+            }
+            steps {
+                withSonarQubeEnv(env.SONAR_SERVER_NAME) {
+                    sh '''
+                        sonar-scanner \
+                        -Dsonar.projectKey=${JOB_NAME} \
+                        -Dsonar.projectName=${JOB_NAME} \
+                        -Dsonar.sources=src \
+                        -Dsonar.tests=src \
+                        -Dsonar.exclusions="**/node_modules/**,**/dist/**"
+                    '''
+                }
+            }
+        }
+
+        stage('Docker Build') {
+            steps {
+                script {
+                    COMMIT = sh(script: "git rev-parse --short HEAD", returnStdout: true).trim()
+                    sh """
+                        docker build -t $DOCKER_IMAGE:$COMMIT . 
+                        docker tag $DOCKER_IMAGE:$COMMIT $DOCKER_IMAGE:latest
+                    """
+                }
+            }
+        }
+
+        stage('Docker Push') {
+            steps {
+                script {
+                    withCredentials([usernamePassword(
+                        credentialsId: DOCKERHUB_CREDENTIALS,
+                        usernameVariable: 'DOCKER_USER',
+                        passwordVariable: 'DOCKER_PASS'
+                    )]) {
+                        sh """
+                            echo "$DOCKER_PASS" | docker login -u "$DOCKER_USER" --password-stdin
+                            docker push $DOCKER_IMAGE:$COMMIT
+                            docker push $DOCKER_IMAGE:latest
+                            docker logout
+                        """
+                    }
+                }
+            }
+        }
+    }
+
+    post {
+        success {
+            echo "Pipeline completed successfully! Image pushed as: $DOCKER_IMAGE:$COMMIT"
+        }
+        failure {
+            echo "Pipeline failed. Check logs for details."
+        }
+    }
+}

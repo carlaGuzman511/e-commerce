@@ -1,0 +1,7 @@
+<article class="category-container">
+  <section *ngFor="let category of (categories$ | async) ; trackBy: trackByCategory">
+    <app-card-info [title]="category.name"
+                   [icon]="category.icon | categoryIcon">
+    </app-card-info>
+  </section>
+</article>

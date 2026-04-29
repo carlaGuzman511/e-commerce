@@ -1,0 +1,23 @@
+spring:
+  application:
+    name: config-service
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://git.digitalharborbolivia.com:8081/bootcampmidpathv2/kiosko/configservice.git/
+          skip-ssl-validation: true
+          username: ${GIT_USERNAME}
+          password: ${GIT_PASSWORD}
+          default-label: develop
+server:
+  port: 8888
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://registry-service:8761/eureka/
+    instance:
+      hostname: config-service
+    fetch-registry: true
+    register-with-eureka: true

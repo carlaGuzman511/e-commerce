@@ -1,0 +1,43 @@
+<article>
+  <section class="category-actions">
+    <div class="category-right-action">
+      <div class="search-wrapper">
+        <input type="search" placeholder="Search"/>
+      </div>
+    </div>
+
+    <div class="left-actions">
+      <generic-button
+        title="Add category"
+        [iconClass]="'icon-plus-filled'"
+        [iconPosition]="ICON_POSITION.Left"
+        [buttonType]="BUTTON_TYPE.Primary"
+        (onClick)="openModalCreate()">
+      </generic-button>
+    </div>
+  </section>
+
+  <app-category-list (editEvent)="openModalUpdate($event)">
+  </app-category-list>
+
+  <ng-container *ngIf="isOpenCreate">
+    <app-category-form
+      formTitle="Create Category"
+      submitLabel="Create"
+      (formCancel)="closeModalCreate()"
+      (formSubmit)="onSubmit($event)">
+    </app-category-form>
+  </ng-container>
+
+  <ng-container *ngIf="isOpenUpdate">
+    <app-category-form *ngIf="category"
+                       formTitle="Update Category"
+                       submitLabel="Update"
+                       [categoryData]="category"
+                       (formCancel)="closeModalCreate()"
+                       (formSubmit)="onSubmit($event)">
+    </app-category-form>
+  </ng-container>
+
+</article>
+

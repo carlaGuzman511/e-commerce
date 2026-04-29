@@ -1,0 +1,64 @@
+<article class="cart-container">
+  <section class="cart-section">
+    <div *ngFor="let cartItem of cartItems ; trackBy: trackByCart">
+      <app-small-card [image]="cartItem.image || ''"
+                      [title]="cartItem.name"
+                      [discount]="cartItem.price+' $'">
+
+        <div class="cart-cant-button">
+          <button (click)="decrement(cartItem)">-</button>
+
+          <span>{{ cartItem.quantity }}</span>
+
+          <button (click)="increment(cartItem)">+</button>
+        </div>
+
+        <button class="delete-button"
+                (click)="deleteItem(cartItem)">
+          <span class="icon-trash-filled"></span>
+        </button>
+      </app-small-card>
+    </div>
+  </section>
+
+  <section class="summary-section">
+    <div class="summary-card">
+      <h3>Summary of Order</h3>
+
+      <div class="row">
+        <span>Retail Price: <small>{{ totalItems }} Articles</small></span>
+        <span class="value">$ {{ subtotal | number:'1.2-2' }}</span>
+      </div>
+
+      <div class="row">
+        <span>Shipping Price:</span>
+        <span class="value">$ {{ shipping }}</span>
+      </div>
+
+      <div class="row">
+        <span>Promotions:</span>
+        <span class="value">$ 0</span>
+      </div>
+
+      <div class="row total">
+        <span>Total order:</span>
+        <span class="value">$ {{ total | number:'1.2-2' }}</span>
+      </div>
+
+      <h4>Select the payment method</h4>
+
+      <div class="pay-options">
+        <button class="pay-option">
+          <i class="fa fa-credit-card"></i>
+          Pay by card
+        </button>
+
+        <button class="pay-option">
+          <i class="fa fa-qrcode"></i>
+          Pay with QR code
+        </button>
+      </div>
+
+    </div>
+  </section>
+</article>

@@ -1,0 +1,74 @@
+<article class="category-modal-container">
+  <section class="modal-card">
+    <section class="modal-header">
+      <div>{{formTitle}}</div>
+
+      <button class="modal-button-close"
+              (click)="closeModal()">
+        <span class="icon-close-bold-filled"></span>
+      </button>
+    </section>
+
+    <section class="modal-form">
+      <form class="category-form"
+            [formGroup]="form"
+            (ngSubmit)="onSubmit()">
+        <div class="category-form-card category-field-full">
+          <generic-input-field
+            label="Category Name"
+            name="name"
+            placeholder="Enter category name"
+            [required]="true"
+            formControlName="name"
+            [error]="getFieldError('name')"
+            [isReadOnly]="isReadOnly">
+          </generic-input-field>
+
+          <generic-text-area-field
+            label="Description"
+            name="description"
+            placeholder="Enter description"
+            [required]="true"
+            formControlName="description"
+            [error]="getFieldError('description')"
+            [isReadOnly]="isReadOnly"
+            [rows]="4">
+          </generic-text-area-field>
+        </div>
+
+        <div class="category-form-card category-field-full">
+          <label class="label category-field-full">Select Icon</label>
+          <div class="icon-grid category-form-card category-field-full">
+
+            <div *ngFor="let icon of iconOptions"
+                 class="icon-item"
+                 [class.selected]="form.get('icon')?.value === icon.key"
+                 (click)="form.get('icon')?.setValue(icon.key)">
+
+              <i [class]="icon.class"></i>
+            </div>
+          </div>
+
+          <div class="error" *ngIf="getFieldError('icon')">
+            {{ getFieldError('icon') }}
+          </div>
+        </div>
+
+
+        <generic-button
+          class="category-field"
+          title="Cancel"
+          [buttonType]="BUTTON_TYPE.Secondary"
+          (onClick)="onCancel()">
+        </generic-button>
+
+        <generic-button
+          class="category-field"
+          [title]="submitLabel"
+          [disabled]="form.invalid"
+          [buttonType]="BUTTON_TYPE.Primary">
+        </generic-button>
+      </form>
+    </section>
+  </section>
+</article>

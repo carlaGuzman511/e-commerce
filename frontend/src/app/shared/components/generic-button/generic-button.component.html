@@ -1,0 +1,18 @@
+<button class="generic-btn"
+        [ngClass]="[buttonType, iconPosition]"
+        [disabled]="disabled"
+        (click)="handleClick()">
+  <ng-container *ngIf="iconClass && iconPosition === ICON_POSITION.Left">
+    <span class="btn-icon left"
+          [ngClass]="iconClass">
+    </span>
+  </ng-container>
+
+  <span class="btn-label">{{ title }}</span>
+
+  <ng-container *ngIf="iconClass && iconPosition === ICON_POSITION.Right">
+    <span class="btn-icon right"
+          [ngClass]="iconClass">
+    </span>
+  </ng-container>
+</button>

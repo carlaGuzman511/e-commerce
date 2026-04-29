@@ -1,0 +1,27 @@
+<div class="store-card" role="group" aria-label="Store card">
+  <div class="card-header">
+    <div class="store-title">{{ store.name }}</div>
+    <div class="status" [ngClass]="{ 'active': store.active === true, 'inactive': store.active === false }">
+      {{ store.active === true ? 'Active' : (store.active === false ? 'Inactive' : (store.active || 'Active')) }}
+    </div>
+
+    <button
+      class="menu-btn"
+      (click)="toggleMenu()"
+      aria-label="Actions"
+      type="button"
+    >
+      ⋮
+    </button>
+
+    <div class="card-menu" *ngIf="isMenuOpen" role="menu">
+      <button type="button" (click)="onView()">Review</button>
+      <button type="button" (click)="onEdit()">Edit</button>
+      <button type="button" (click)="onRemove()">Remove</button>
+    </div>
+  </div>
+
+  <div class="card-body">
+    <div class="info">{{ store.info }}</div>
+  </div>
+</div>

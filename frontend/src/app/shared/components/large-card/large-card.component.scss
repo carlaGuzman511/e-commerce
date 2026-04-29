@@ -1,0 +1,121 @@
+.card-container {
+  align-items: center;
+  background-color: var(--gray-100);
+  border: 2px solid;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  font-family: var(--font-primary);
+  font-size: 12px;
+  gap: 20px;
+  height: 250px;
+  position: relative;
+  width: 350px;
+
+  .card-media {
+    height: 60%;
+    position: relative;
+    width: 100%;
+  }
+
+  .card-image {
+    border-radius: 20px;
+    height: 100%;
+    object-fit: cover;
+    width: 100%;
+  }
+
+  .card-discount {
+    align-items: center;
+    background-color: var(--orange);
+    border-radius: 50px;
+    bottom: -15px;
+    color: var(--white);
+    display: flex;
+    font-weight: 600;
+    height: 30px;
+    justify-content: center;
+    left: 0;
+    position: absolute;
+    width: 100px;
+  }
+
+  .card-category {
+    align-items: center;
+    background-color: var(--gray-500);
+    border-radius: 50px;
+    bottom: -15px;
+    color: var(--white);
+    display: flex;
+    font-weight: 600;
+    height: 30px;
+    justify-content: center;
+    position: absolute;
+    right: 0;
+    width: 100px;
+  }
+
+  .card-info {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+
+    .card-star {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      width: 90%;
+
+      .card-discount-through {
+        text-decoration: line-through;
+      }
+
+      .card-icon-star {
+        color: var(--yellow);
+        display: flex;
+        flex-direction: row;
+
+        p {
+          color: var(--gray-600);
+        }
+      }
+    }
+
+    .card-panel {
+      align-items: end;
+      display: flex;
+      flex-direction: row;
+      font-size: 10px;
+      gap: 5px;
+      justify-content: flex-end;
+      width: 91%;
+    }
+  }
+
+  .card-title {
+    -webkit-box-orient: vertical;
+    color: var(--orange);
+    display: box;
+    font-weight: 900;
+    -webkit-line-clamp: 3;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 200px;
+  }
+
+  /* stylelint-disable */
+  .card-description {
+    font-size: 15px;
+    line-height: 1.4;
+    padding: 0 10px;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: normal;
+  }
+  /* stylelint-enable */
+}

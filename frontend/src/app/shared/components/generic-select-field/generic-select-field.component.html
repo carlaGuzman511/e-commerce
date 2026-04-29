@@ -1,0 +1,34 @@
+<div class="form-field" [class]="className" [ngClass]="{'has-error': error, 'is-disabled': disabled}">
+  <label class="form-label" *ngIf="label" [for]="name">
+    {{ label }}
+    <span class="required" *ngIf="required">*</span>
+  </label>
+
+  <select
+    [id]="name"
+    [name]="name"
+    [value]="value"
+    [ngModel]="value"
+    [required]="required"
+    [disabled]="disabled"
+    [class]="'form-select ' + (error ? 'error' : '')"
+    [class.valid]="!error && value"
+    (input)="handleInput($event)"
+    (blur)="handleBlur()">
+
+    <option value="">{{ placeholder }}</option>
+
+    <option *ngFor="let option of options; trackBy: trackByOptionValue"
+            [value]="option.value"
+            [selected]="option.value === value">
+      {{ option.label }}
+    </option>
+  </select>
+
+  <div class="error-message"
+       *ngIf="error"
+       role="alert">{{ error }}</div>
+
+  <div class="helper-text"
+       *ngIf="helperText && !error">{{ helperText }}</div>
+</div>

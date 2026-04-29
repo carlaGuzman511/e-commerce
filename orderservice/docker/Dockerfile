@@ -1,0 +1,10 @@
+FROM postgres:15
+
+ENV POSTGRES_USER=${DB_USER}
+ENV POSTGRES_PASSWORD=${DB_PASSWORD}
+ENV POSTGRES_DB=${DB_NAME}
+ENV POSTGRES_PORT=${DB_PORT}
+
+COPY ../scripts/init.sql /docker-entrypoint-initdb.d/init.sql
+
+EXPOSE ${POSTGRES_PORT}

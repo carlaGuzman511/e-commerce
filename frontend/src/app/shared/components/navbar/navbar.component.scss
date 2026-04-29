@@ -1,0 +1,91 @@
+.navbar {
+  align-items: center;
+  background: var(--gray-300);
+  display: flex;
+  gap: 24px;
+  height: 64px;
+  justify-content: space-between;
+  padding: 0 32px;
+  width: 100%;
+
+  &-brand {
+    align-items: center;
+    display: flex;
+    gap: 8px;
+
+    .navbar-icon-home {
+      align-content: center;
+      background-color: var(--accent-pink);
+      border-radius: 10px;
+      color: white;
+      height: 32px;
+      text-align-last: center;
+      width: 32px;
+    }
+
+    & .navbar-logo {
+      height: 26px;
+      width: 26px;
+    }
+
+    & .navbar-title {
+      color: #111;
+      font-size: 16px;
+      font-weight: 600;
+    }
+  }
+
+  &-tabs {
+    align-items: center;
+    display: flex;
+    gap: 8px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  &-tab {
+    background: transparent;
+    border: 1px solid #d4d7db;
+    border-radius: 8px;
+    color: #333;
+    cursor: pointer;
+    font-size: 14px;
+    padding: 8px 20px;
+    transition: 0.2s;
+
+    &:hover {
+      background: #dfe3e6;
+    }
+
+    &-active {
+      background: #2e2f31;
+      border-color: #2e2f31;
+      color: #fff;
+    }
+  }
+
+  &-actions {
+    align-items: center;
+    display: flex;
+    gap: 24px;
+  }
+
+  &-icon {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 4px;
+
+    svg {
+      fill: none;
+      stroke: #111;
+      stroke-width: 2;
+      transition: 0.2s;
+    }
+
+    &:hover svg {
+      stroke: #6b46ff;
+    }
+  }
+}

@@ -1,0 +1,46 @@
+<div class="page-actions">
+  <div class="right-actions">
+    <div class="search-wrapper">
+      <input type="search" placeholder="Search" [(ngModel)]="query" />
+    </div>
+  </div>
+  
+  <div class="left-actions">
+    <generic-button
+      title="Add Branch"
+      [buttonType]="buttonType.Primary"
+      (onClick)="openModal()">
+    </generic-button>
+  </div>
+</div>
+
+<section class="cards-area">
+  <ng-container *ngIf="(branches$ | async) as branches">
+    <div class="empty" *ngIf="branches.length === 0">No branches yet</div>
+
+    <div class="cards-grid">
+      <ng-container *ngFor="let branch of branches; trackBy: trackByBranchId">
+        <app-branch-card
+          *ngIf="!query || branch.name?.toLowerCase()?.includes(query.toLowerCase())"
+          [branch]="branch"
+          (view)="onView($event)"
+          (edit)="onEdit($event)"
+          (remove)="onRemove($event)"
+        ></app-branch-card>
+      </ng-container>
+    </div>
+  </ng-container>
+</section>
+
+<app-branch-modal
+  [title]="(selectedBranch$ | async) ? 'Edit Branch' : 'Create Branch'"
+  [mode]="isModalMode"
+  [initialData]="selectedBranch$ | async"
+  (save)="onModalSubmit($event)"
+  (cancel)="onModalCancel()"
+  *ngIf="isModalOpen">
+</app-branch-modal>
+
+<div class="spinner-overlay" *ngIf="(loading$ | async)">
+  <div class="spinner"></div>
+</div>

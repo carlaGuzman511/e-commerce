@@ -1,0 +1,161 @@
+INSERT INTO dbo.orders (
+    delivery_method_id,
+    discounts,
+    order_status_id,
+    payment_method_id,
+    total,
+    branch_id,
+    created_at,
+    updated_at,
+    user_id,
+    city,
+    country,
+    postal_code,
+    state,
+    street,
+    tenant_id
+)
+VALUES
+(1, 5.00, 1, 1, 120.50, 101, NOW() - INTERVAL '10 days', NOW() - INTERVAL '9 days', 1001, 'Cochabamba', 'Bolivia', '0001', 'Cochabamba', 'Av. Blanco Galindo #1234', 'tenant_001'),
+(2, 0.00, 2, 2, 89.99, 102, NOW() - INTERVAL '7 days', NOW() - INTERVAL '6 days', 1002, 'La Paz', 'Bolivia', '0002', 'La Paz', 'Calle 16 de Obrajes', 'tenant_001'),
+(1, 10.00, 3, 3, 245.75, 103, NOW() - INTERVAL '5 days', NOW() - INTERVAL '4 days', 1003, 'Santa Cruz', 'Bolivia', '0003', 'Santa Cruz', 'Av. San Martín #456', 'tenant_002'),
+(3, 0.00, 1, 1, 54.30, 104, NOW() - INTERVAL '3 days', NOW() - INTERVAL '2 days', 1004, 'Sucre', 'Bolivia', '0004', 'Chuquisaca', 'Calle Junín #789', 'tenant_003'),
+(2, 7.50, 2, 2, 199.99, 105, NOW() - INTERVAL '1 day', NOW(), 1005, 'Tarija', 'Bolivia', '0005', 'Tarija', 'Av. Las Américas #321', 'tenant_001'),
+
+(1, 0.00, 1, 2, 80.25, 101, NOW() - INTERVAL '14 days', NOW() - INTERVAL '13 days', 1006, 'Oruro', 'Bolivia', '0006', 'Oruro', 'Calle Pagador #221', 'tenant_001'),
+(2, 3.50, 2, 1, 150.90, 102, NOW() - INTERVAL '13 days', NOW() - INTERVAL '12 days', 1007, 'Potosí', 'Bolivia', '0007', 'Potosí', 'Av. Serrudo #442', 'tenant_002'),
+(1, 2.00, 3, 3, 67.40, 103, NOW() - INTERVAL '12 days', NOW() - INTERVAL '11 days', 1008, 'Beni', 'Bolivia', '0008', 'Beni', 'Av. Banzer #155', 'tenant_001'),
+(3, 0.00, 1, 1, 345.10, 104, NOW() - INTERVAL '11 days', NOW() - INTERVAL '10 days', 1009, 'Pando', 'Bolivia', '0009', 'Pando', 'Calle Central #95', 'tenant_002'),
+(2, 5.00, 2, 2, 210.00, 105, NOW() - INTERVAL '10 days', NOW() - INTERVAL '9 days', 1010, 'Trinidad', 'Bolivia', '0010', 'Beni', 'Av. Mamoré #300', 'tenant_003'),
+
+(1, 4.00, 3, 3, 175.25, 106, NOW() - INTERVAL '9 days', NOW() - INTERVAL '8 days', 1011, 'Yacuiba', 'Bolivia', '0011', 'Tarija', 'Av. Bolívar #88', 'tenant_001'),
+(3, 0.00, 1, 1, 95.75, 107, NOW() - INTERVAL '8 days', NOW() - INTERVAL '7 days', 1012, 'Villamontes', 'Bolivia', '0012', 'Tarija', 'Calle Comercio #212', 'tenant_002'),
+(2, 6.50, 2, 2, 65.80, 108, NOW() - INTERVAL '7 days', NOW() - INTERVAL '6 days', 1013, 'Montero', 'Bolivia', '0013', 'Santa Cruz', 'Av. Busch #320', 'tenant_001'),
+(1, 0.00, 3, 3, 500.00, 109, NOW() - INTERVAL '6 days', NOW() - INTERVAL '5 days', 1014, 'Warnes', 'Bolivia', '0014', 'Santa Cruz', 'Calle Norte #501', 'tenant_002'),
+(2, 10.00, 1, 2, 305.40, 110, NOW() - INTERVAL '5 days', NOW() - INTERVAL '4 days', 1015, 'Camiri', 'Bolivia', '0015', 'Santa Cruz', 'Av. Central #678', 'tenant_003'),
+
+(3, 8.25, 2, 1, 89.95, 111, NOW() - INTERVAL '4 days', NOW() - INTERVAL '3 days', 1016, 'Riberalta', 'Bolivia', '0016', 'Beni', 'Calle 2 de Agosto #90', 'tenant_001'),
+(1, 0.00, 3, 3, 250.00, 112, NOW() - INTERVAL '3 days', NOW() - INTERVAL '2 days', 1017, 'Cobija', 'Bolivia', '0017', 'Pando', 'Av. 9 de Febrero #210', 'tenant_002'),
+(2, 5.50, 1, 2, 400.30, 113, NOW() - INTERVAL '2 days', NOW() - INTERVAL '1 day', 1018, 'Trinidad', 'Bolivia', '0018', 'Beni', 'Calle Cochabamba #41', 'tenant_003'),
+(1, 2.00, 2, 1, 72.45, 114, NOW() - INTERVAL '1 day', NOW(), 1019, 'Cochabamba', 'Bolivia', '0019', 'Cochabamba', 'Av. Uyuni #143', 'tenant_001'),
+(3, 0.00, 3, 3, 650.60, 115, NOW() - INTERVAL '15 days', NOW() - INTERVAL '14 days', 1020, 'La Paz', 'Bolivia', '0020', 'La Paz', 'Av. 6 de Agosto #901', 'tenant_001'),
+
+(1, 1.00, 2, 2, 99.99, 116, NOW() - INTERVAL '20 days', NOW() - INTERVAL '19 days', 1021, 'Santa Cruz', 'Bolivia', '0021', 'Santa Cruz', 'Calle Aroma #12', 'tenant_002'),
+(2, 3.50, 3, 3, 199.90, 117, NOW() - INTERVAL '19 days', NOW() - INTERVAL '18 days', 1022, 'Cochabamba', 'Bolivia', '0022', 'Cochabamba', 'Av. Ayacucho #221', 'tenant_001'),
+(3, 0.00, 1, 1, 155.40, 118, NOW() - INTERVAL '18 days', NOW() - INTERVAL '17 days', 1023, 'Sucre', 'Bolivia', '0023', 'Chuquisaca', 'Calle España #123', 'tenant_002'),
+(1, 2.50, 2, 2, 180.00, 119, NOW() - INTERVAL '17 days', NOW() - INTERVAL '16 days', 1024, 'Tarija', 'Bolivia', '0024', 'Tarija', 'Av. La Madrid #17', 'tenant_003'),
+(2, 0.00, 3, 3, 220.80, 120, NOW() - INTERVAL '16 days', NOW() - INTERVAL '15 days', 1025, 'La Paz', 'Bolivia', '0025', 'La Paz', 'Av. Camacho #33', 'tenant_001'),
+
+(3, 0.00, 1, 1, 310.55, 121, NOW() - INTERVAL '15 days', NOW() - INTERVAL '14 days', 1026, 'Oruro', 'Bolivia', '0026', 'Oruro', 'Calle Bolívar #78', 'tenant_002'),
+(1, 5.00, 2, 2, 180.90, 122, NOW() - INTERVAL '14 days', NOW() - INTERVAL '13 days', 1027, 'Santa Cruz', 'Bolivia', '0027', 'Santa Cruz', 'Av. Alemana #40', 'tenant_003'),
+(2, 0.00, 3, 3, 540.10, 123, NOW() - INTERVAL '13 days', NOW() - INTERVAL '12 days', 1028, 'Cochabamba', 'Bolivia', '0028', 'Cochabamba', 'Av. América #601', 'tenant_001'),
+(3, 0.00, 1, 1, 75.50, 124, NOW() - INTERVAL '12 days', NOW() - INTERVAL '11 days', 1029, 'La Paz', 'Bolivia', '0029', 'La Paz', 'Av. Montes #901', 'tenant_002'),
+(1, 9.00, 2, 2, 430.45, 125, NOW() - INTERVAL '11 days', NOW() - INTERVAL '10 days', 1030, 'Sucre', 'Bolivia', '0030', 'Chuquisaca', 'Calle Ravelo #210', 'tenant_003'),
+
+(2, 0.00, 3, 3, 300.75, 126, NOW() - INTERVAL '10 days', NOW() - INTERVAL '9 days', 1031, 'Oruro', 'Bolivia', '0031', 'Oruro', 'Calle Aroma #11', 'tenant_001'),
+(1, 1.50, 1, 1, 150.10, 127, NOW() - INTERVAL '9 days', NOW() - INTERVAL '8 days', 1032, 'La Paz', 'Bolivia', '0032', 'La Paz', 'Calle Ecuador #45', 'tenant_002'),
+(3, 0.00, 2, 2, 295.00, 128, NOW() - INTERVAL '8 days', NOW() - INTERVAL '7 days', 1033, 'Santa Cruz', 'Bolivia', '0033', 'Santa Cruz', 'Av. Cristo Redentor #111', 'tenant_003'),
+(2, 2.00, 3, 3, 410.90, 129, NOW() - INTERVAL '7 days', NOW() - INTERVAL '6 days', 1034, 'Tarija', 'Bolivia', '0034', 'Tarija', 'Calle Suipacha #99', 'tenant_001'),
+(1, 0.00, 1, 1, 199.80, 130, NOW() - INTERVAL '6 days', NOW() - INTERVAL '5 days', 1035, 'Cochabamba', 'Bolivia', '0035', 'Cochabamba', 'Av. Circunvalación #65', 'tenant_002'),
+
+(3, 0.00, 2, 2, 275.60, 131, NOW() - INTERVAL '5 days', NOW() - INTERVAL '4 days', 1036, 'La Paz', 'Bolivia', '0036', 'La Paz', 'Av. Arce #150', 'tenant_003'),
+(2, 0.00, 3, 3, 505.99, 132, NOW() - INTERVAL '4 days', NOW() - INTERVAL '3 days', 1037, 'Santa Cruz', 'Bolivia', '0037', 'Santa Cruz', 'Av. Santos Dumont #400', 'tenant_001'),
+(1, 0.00, 1, 1, 130.30, 133, NOW() - INTERVAL '3 days', NOW() - INTERVAL '2 days', 1038, 'Oruro', 'Bolivia', '0038', 'Oruro', 'Calle Sucre #201', 'tenant_002'),
+(2, 5.00, 2, 2, 189.75, 134, NOW() - INTERVAL '2 days', NOW() - INTERVAL '1 day', 1039, 'Cochabamba', 'Bolivia', '0039', 'Cochabamba', 'Av. Melchor Pérez #77', 'tenant_001'),
+(1, 0.00, 3, 3, 349.20, 135, NOW() - INTERVAL '1 day', NOW(), 1040, 'La Paz', 'Bolivia', '0040', 'La Paz', 'Av. Illimani #301', 'tenant_002'),
+
+(3, 4.00, 1, 1, 99.50, 136, NOW() - INTERVAL '9 days', NOW() - INTERVAL '8 days', 1041, 'Santa Cruz', 'Bolivia', '0041', 'Santa Cruz', 'Av. Virgen de Cotoca #11', 'tenant_003'),
+(2, 3.00, 2, 2, 200.00, 137, NOW() - INTERVAL '8 days', NOW() - INTERVAL '7 days', 1042, 'Cochabamba', 'Bolivia', '0042', 'Cochabamba', 'Av. Heroínas #78', 'tenant_001'),
+(1, 0.00, 3, 3, 450.99, 138, NOW() - INTERVAL '7 days', NOW() - INTERVAL '6 days', 1043, 'La Paz', 'Bolivia', '0043', 'La Paz', 'Av. Busch #55', 'tenant_002'),
+(3, 1.50, 1, 1, 340.70, 139, NOW() - INTERVAL '6 days', NOW() - INTERVAL '5 days', 1044, 'Sucre', 'Bolivia', '0044', 'Chuquisaca', 'Calle Calvo #98', 'tenant_001'),
+(2, 0.00, 2, 2, 600.00, 140, NOW() - INTERVAL '5 days', NOW() - INTERVAL '4 days', 1045, 'Tarija', 'Bolivia', '0045', 'Tarija', 'Av. La Madrid #87', 'tenant_002'),
+(1, 0.00, 3, 3, 730.10, 141, NOW() - INTERVAL '4 days', NOW() - INTERVAL '3 days', 1046, 'Santa Cruz', 'Bolivia', '0046', 'Santa Cruz', 'Av. 4to Anillo #90', 'tenant_001'),
+(3, 7.25, 1, 1, 210.50, 142, NOW() - INTERVAL '3 days', NOW() - INTERVAL '2 days', 1047, 'Oruro', 'Bolivia', '0047', 'Oruro', 'Av. Villarroel #10', 'tenant_002'),
+(2, 2.00, 2, 2, 120.00, 143, NOW() - INTERVAL '2 days', NOW() - INTERVAL '1 day', 1048, 'Cochabamba', 'Bolivia', '0048', 'Cochabamba', 'Av. Ballivián #72', 'tenant_003'),
+(1, 0.00, 3, 3, 330.00, 144, NOW() - INTERVAL '1 day', NOW(), 1049, 'La Paz', 'Bolivia', '0049', 'La Paz', 'Av. Buenos Aires #222', 'tenant_001'),
+(3, 0.00, 1, 1, 89.99, 145, NOW(), NOW(), 1050, 'Santa Cruz', 'Bolivia', '0050', 'Santa Cruz', 'Calle Bolívar #5', 'tenant_002');
+
+
+INSERT INTO dbo.order_items (
+    discount,
+    price,
+    quantity,
+    total,
+    created_at,
+    order_id,
+    product_id,
+    updated_at,
+    variant_id,
+    tenant_id
+)
+VALUES
+-- =========================
+-- tenant_001 orders (1,2,5,6,8,13,15,19,20,22,25,28,34,39,42,46,49)
+-- =========================
+(0.00, 25.50, 2, 51.00, NOW() - INTERVAL '10 days', 1, 101, NOW() - INTERVAL '9 days', 201, 'tenant_001'),
+(5.00, 10.00, 3, 25.00, NOW() - INTERVAL '10 days', 1, 102, NOW() - INTERVAL '9 days', 202, 'tenant_001'),
+(0.00, 15.50, 1, 15.50, NOW() - INTERVAL '7 days', 2, 103, NOW() - INTERVAL '6 days', 203, 'tenant_001'),
+(2.00, 30.00, 2, 58.00, NOW() - INTERVAL '7 days', 2, 104, NOW() - INTERVAL '6 days', 204, 'tenant_001'),
+(0.00, 40.00, 2, 80.00, NOW() - INTERVAL '1 day', 5, 105, NOW(), 205, 'tenant_001'),
+(0.00, 19.99, 5, 99.95, NOW() - INTERVAL '14 days', 6, 106, NOW() - INTERVAL '13 days', 206, 'tenant_001'),
+(1.00, 18.00, 2, 35.00, NOW() - INTERVAL '14 days', 6, 107, NOW() - INTERVAL '13 days', 207, 'tenant_001'),
+(0.00, 55.00, 1, 55.00, NOW() - INTERVAL '8 days', 8, 108, NOW() - INTERVAL '7 days', 208, 'tenant_001'),
+(3.00, 27.50, 2, 52.00, NOW() - INTERVAL '8 days', 8, 109, NOW() - INTERVAL '7 days', 209, 'tenant_001'),
+(0.00, 12.50, 4, 50.00, NOW() - INTERVAL '5 days', 13, 110, NOW() - INTERVAL '4 days', 210, 'tenant_001'),
+(0.00, 45.00, 2, 90.00, NOW() - INTERVAL '1 day', 15, 111, NOW(), 211, 'tenant_001'),
+(2.00, 10.00, 3, 28.00, NOW() - INTERVAL '1 day', 15, 112, NOW(), 212, 'tenant_001'),
+(1.00, 70.00, 3, 209.00, NOW() - INTERVAL '1 day', 19, 113, NOW(), 213, 'tenant_001'),
+(0.00, 25.00, 2, 50.00, NOW() - INTERVAL '15 days', 20, 114, NOW() - INTERVAL '14 days', 214, 'tenant_001'),
+(0.00, 100.00, 1, 100.00, NOW() - INTERVAL '19 days', 22, 115, NOW() - INTERVAL '18 days', 215, 'tenant_001'),
+(5.00, 40.00, 2, 75.00, NOW() - INTERVAL '16 days', 25, 116, NOW() - INTERVAL '15 days', 216, 'tenant_001'),
+(0.00, 60.00, 3, 180.00, NOW() - INTERVAL '13 days', 28, 117, NOW() - INTERVAL '12 days', 217, 'tenant_001'),
+(0.00, 45.00, 1, 45.00, NOW() - INTERVAL '7 days', 34, 118, NOW() - INTERVAL '6 days', 218, 'tenant_001'),
+(3.00, 22.00, 2, 41.00, NOW() - INTERVAL '2 days', 39, 119, NOW() - INTERVAL '1 day', 219, 'tenant_001'),
+(0.00, 75.00, 1, 75.00, NOW() - INTERVAL '8 days', 42, 120, NOW() - INTERVAL '7 days', 220, 'tenant_001'),
+(0.00, 33.00, 3, 99.00, NOW() - INTERVAL '4 days', 46, 121, NOW() - INTERVAL '3 days', 221, 'tenant_001'),
+(1.00, 12.00, 4, 47.00, NOW() - INTERVAL '1 day', 49, 122, NOW(), 222, 'tenant_001'),
+
+-- =========================
+-- tenant_002 orders (3,7,9,10,12,14,17,18,23,26,29,32,35,37,40,43,47,50)
+-- =========================
+(0.00, 55.50, 1, 55.50, NOW() - INTERVAL '5 days', 3, 123, NOW() - INTERVAL '4 days', 223, 'tenant_002'),
+(2.00, 20.00, 2, 38.00, NOW() - INTERVAL '5 days', 3, 124, NOW() - INTERVAL '4 days', 224, 'tenant_002'),
+(1.00, 45.00, 2, 89.00, NOW() - INTERVAL '13 days', 7, 125, NOW() - INTERVAL '12 days', 225, 'tenant_002'),
+(0.00, 25.00, 3, 75.00, NOW() - INTERVAL '11 days', 9, 126, NOW() - INTERVAL '10 days', 226, 'tenant_002'),
+(0.00, 18.00, 5, 90.00, NOW() - INTERVAL '11 days', 9, 127, NOW() - INTERVAL '10 days', 227, 'tenant_002'),
+(5.00, 60.00, 1, 55.00, NOW() - INTERVAL '5 days', 10, 128, NOW() - INTERVAL '4 days', 228, 'tenant_002'),
+(0.00, 22.50, 2, 45.00, NOW() - INTERVAL '3 days', 12, 129, NOW() - INTERVAL '2 days', 229, 'tenant_002'),
+(0.00, 35.00, 2, 70.00, NOW() - INTERVAL '6 days', 14, 130, NOW() - INTERVAL '5 days', 230, 'tenant_002'),
+(0.00, 20.00, 2, 40.00, NOW() - INTERVAL '3 days', 17, 131, NOW() - INTERVAL '2 days', 231, 'tenant_002'),
+(0.00, 90.00, 1, 90.00, NOW() - INTERVAL '2 days', 18, 132, NOW() - INTERVAL '1 day', 232, 'tenant_002'),
+(0.00, 15.00, 4, 60.00, NOW() - INTERVAL '18 days', 23, 133, NOW() - INTERVAL '17 days', 233, 'tenant_002'),
+(2.00, 30.00, 3, 88.00, NOW() - INTERVAL '15 days', 26, 134, NOW() - INTERVAL '14 days', 234, 'tenant_002'),
+(0.00, 25.00, 2, 50.00, NOW() - INTERVAL '12 days', 29, 135, NOW() - INTERVAL '11 days', 235, 'tenant_002'),
+(0.00, 18.00, 5, 90.00, NOW() - INTERVAL '9 days', 32, 136, NOW() - INTERVAL '8 days', 236, 'tenant_002'),
+(0.00, 60.00, 2, 120.00, NOW() - INTERVAL '6 days', 35, 137, NOW() - INTERVAL '5 days', 237, 'tenant_002'),
+(0.00, 45.00, 3, 135.00, NOW() - INTERVAL '4 days', 37, 138, NOW() - INTERVAL '3 days', 238, 'tenant_002'),
+(0.00, 25.00, 4, 100.00, NOW() - INTERVAL '2 days', 40, 139, NOW() - INTERVAL '1 day', 239, 'tenant_002'),
+(1.00, 10.00, 2, 19.00, NOW(), 43, 140, NOW(), 240, 'tenant_002'),
+(0.00, 70.00, 3, 210.00, NOW(), 47, 141, NOW(), 241, 'tenant_002'),
+(2.00, 80.00, 1, 78.00, NOW(), 50, 142, NOW(), 242, 'tenant_002'),
+
+-- =========================
+-- tenant_003 orders (4,11,16,21,24,27,30,31,33,36,38,41,44,45,48)
+-- =========================
+(0.00, 45.00, 2, 90.00, NOW() - INTERVAL '3 days', 4, 143, NOW() - INTERVAL '2 days', 243, 'tenant_003'),
+(1.00, 12.00, 5, 59.00, NOW() - INTERVAL '3 days', 4, 144, NOW() - INTERVAL '2 days', 244, 'tenant_003'),
+(0.00, 33.00, 3, 99.00, NOW() - INTERVAL '9 days', 11, 145, NOW() - INTERVAL '8 days', 245, 'tenant_003'),
+(0.00, 12.50, 6, 75.00, NOW() - INTERVAL '4 days', 16, 146, NOW() - INTERVAL '3 days', 246, 'tenant_003'),
+(0.00, 22.50, 2, 45.00, NOW() - INTERVAL '17 days', 21, 147, NOW() - INTERVAL '16 days', 247, 'tenant_003'),
+(0.00, 15.00, 3, 45.00, NOW() - INTERVAL '17 days', 21, 148, NOW() - INTERVAL '16 days', 248, 'tenant_003'),
+(0.00, 99.00, 1, 99.00, NOW() - INTERVAL '17 days', 24, 149, NOW() - INTERVAL '16 days', 249, 'tenant_003'),
+(0.00, 30.00, 3, 90.00, NOW() - INTERVAL '14 days', 27, 150, NOW() - INTERVAL '13 days', 250, 'tenant_003'),
+(1.00, 17.50, 4, 69.00, NOW() - INTERVAL '11 days', 30, 151, NOW() - INTERVAL '10 days', 251, 'tenant_003'),
+(0.00, 50.00, 2, 100.00, NOW() - INTERVAL '9 days', 31, 152, NOW() - INTERVAL '8 days', 252, 'tenant_003'),
+(0.00, 25.00, 2, 50.00, NOW() - INTERVAL '8 days', 33, 153, NOW() - INTERVAL '7 days', 253, 'tenant_003'),
+(0.00, 40.00, 3, 120.00, NOW() - INTERVAL '5 days', 36, 154, NOW() - INTERVAL '4 days', 254, 'tenant_003'),
+(0.00, 18.00, 4, 72.00, NOW() - INTERVAL '3 days', 38, 155, NOW() - INTERVAL '2 days', 255, 'tenant_003'),
+(0.00, 75.00, 1, 75.00, NOW() - INTERVAL '1 day', 41, 156, NOW(), 256, 'tenant_003'),
+(0.00, 33.00, 3, 99.00, NOW() - INTERVAL '1 day', 44, 157, NOW(), 257, 'tenant_003'),
+(2.00, 90.00, 2, 178.00, NOW(), 45, 158, NOW(), 258, 'tenant_003'),
+(0.00, 15.00, 5, 75.00, NOW(), 48, 159, NOW(), 259, 'tenant_003');
